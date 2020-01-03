@@ -34,7 +34,6 @@
             prop="updateTime"
             header-align="center"
             align="center"
-            :formatter="tableTimeFormat"
             label="更新时间">
         </el-table-column>
         <el-table-column
@@ -62,7 +61,6 @@
 </template>
 <script>
 import AddOrUpdate from './material-file-add-or-update'
-import format from '@/utils/format';
 export default {
     components:{
         AddOrUpdate
@@ -140,12 +138,6 @@ export default {
         currentChangeHandle (val) {
             this.pageIndex = val
             this.getDataList()
-        },
-        tableTimeFormat(row, column, cellValue){
-            if(!cellValue){
-            return '';
-            }
-            return format.formatDate(cellValue,'yyyy-MM-dd HH:mm');
         }
         
     }

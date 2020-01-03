@@ -61,7 +61,6 @@
         prop="expireTime"
         header-align="center"
         align="center"
-        :formatter="tableTimeFormat"
         width="100"
         label="失效时间">
       </el-table-column>
@@ -91,7 +90,6 @@
 </template>
 
 <script>
-import format from '@/utils/format';
   import AddOrUpdate from './wxqrcode-add-or-update'
   export default {
     data () {
@@ -190,13 +188,7 @@ import format from '@/utils/format';
             }
           })
         })
-      },
-      tableTimeFormat(row, column, cellValue){
-            if(!cellValue){
-            return '';
-            }
-            return format.formatDate(cellValue,'yyyy-MM-dd HH:mm');
-        }
+      }
     }
   }
 </script>

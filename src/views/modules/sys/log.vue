@@ -66,7 +66,6 @@
         header-align="center"
         align="center"
         width="180"
-        :formatter="tableTimeFormat"
         label="创建时间">
       </el-table-column>
     </el-table>
@@ -83,7 +82,6 @@
 </template>
 
 <script>
-  import format from '@/utils/format';
   export default {
     data () {
       return {
@@ -136,13 +134,7 @@
       currentChangeHandle (val) {
         this.pageIndex = val
         this.getDataList()
-      },
-      tableTimeFormat(row, column, cellValue){
-        if(!cellValue){
-          return '';
-        }
-        return format.formatDate(cellValue,'yyyy-MM-dd HH:mm');
-      },
+      }
     }
   }
 </script>

@@ -37,7 +37,6 @@
         prop="type"
         header-align="center"
         align="center"
-        :formatter="articleTypeFormat"
         label="文章类型">
       </el-table-column>
       <el-table-column
@@ -85,7 +84,6 @@
 </template>
 
 <script>
-  import format from '@/utils/format';
   export default {
     data () {
       return {
@@ -194,12 +192,6 @@
             }
           })
         })
-      },
-      tableTimeFormat(row, column, cellValue){
-        if(!cellValue){
-          return '';
-        }
-        return format.formatDate(cellValue,'yyyy-MM-dd HH:mm');
       },
       articleTypeFormat(row, column, cellValue) {
         return this.ARTICLE_TYPES[cellValue];

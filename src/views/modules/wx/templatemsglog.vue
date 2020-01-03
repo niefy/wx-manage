@@ -51,7 +51,6 @@
         prop="sendTime"
         header-align="center"
         align="center"
-        :formatter="tableTimeFormat"
         width="100"
         label="发送时间">
       </el-table-column>
@@ -86,7 +85,6 @@
 </template>
 
 <script>
-  import format from '@/utils/format';
   export default {
     data () {
       return {
@@ -174,13 +172,7 @@
             }
           })
         })
-      },
-      tableTimeFormat(row, column, cellValue){
-        if(!cellValue){
-          return '';
-        }
-        return format.formatDate(cellValue,'yyyy-MM-dd HH:mm');
-      },
+      }
     }
   }
 </script>

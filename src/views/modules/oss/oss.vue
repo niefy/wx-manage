@@ -41,7 +41,6 @@
         header-align="center"
         align="center"
         width="180"
-        :formatter="tableTimeFormat"
         label="创建时间">
       </el-table-column>
       <el-table-column
@@ -72,7 +71,6 @@
 </template>
 
 <script>
-  import format from '@/utils/format';
   export default {
     data () {
       return {
@@ -176,12 +174,6 @@
             }
           })
         }).catch(() => {})
-      },
-      tableTimeFormat(row, column, cellValue){
-        if(!cellValue){
-          return '';
-        }
-        return format.formatDate(cellValue,'yyyy-MM-dd HH:mm');
       },
       isImageUrl(url){
           return url && /.*\.(gif|jpg|jpeg|png|GIF|JPEG|JPG|PNG)/.test(url)

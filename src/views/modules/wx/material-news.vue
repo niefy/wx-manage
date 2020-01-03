@@ -34,7 +34,6 @@
             prop="updateTime"
             header-align="center"
             align="center"
-            :formatter="tableTimeFormat"
             label="更新时间">
         </el-table-column>
         <el-table-column
@@ -58,7 +57,6 @@
     </div>
 </template>
 <script>
-import format from '@/utils/format';
 export default {
     data(){
         return{
@@ -138,12 +136,6 @@ export default {
             this.$message.info("请前往公众号后台编辑！")
             setTimeout(()=>window.open('https://mp.weixin.qq.com/'),1500)
             
-        },
-        tableTimeFormat(row, column, cellValue){
-            if(!cellValue){
-            return '';
-            }
-            return format.formatDate(cellValue,'yyyy-MM-dd HH:mm');
         }
         
     }

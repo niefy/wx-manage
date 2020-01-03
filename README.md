@@ -30,3 +30,9 @@ npm run build
 - UI框架：[ElementUI](https://element.eleme.cn/#/zh-CN/component/quickstart)
 - 后台模板：[renren-fast-vue](https://gitee.com/renrenio/renren-fast-vue)
 - 富文本编辑器：[tinymce5](https://www.tiny.cloud/docs/quick-start/)
+
+## 截图
+![公众号菜单](https://raw.githubusercontent.com/niefy/wx-manage/master/screenshoot/菜单管理.png)
+![带参二维码](https://raw.githubusercontent.com/niefy/wx-manage/master/screenshoot/带参二维码.png)
+![文章编辑](https://raw.githubusercontent.com/niefy/wx-manage/master/screenshoot/文章编辑.png)
+![自动回复](https://raw.githubusercontent.com/niefy/wx-manage/master/screenshoot/自动回复.png)
