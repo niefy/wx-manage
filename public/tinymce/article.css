@@ -1,0 +1,96 @@
+/* html相关样式 */
+a {
+    color: #4285f4;
+}
+h1,h2,h3,h4,h5,h6{
+    margin: 0.3rem 0;
+    color: #0064A8;
+    line-height: 2rem;
+}
+h1{
+    font-size: 1.4rem;
+}
+h2{
+    font-size: 1.2rem;
+}
+h3{
+    font-size: 1.1rem;
+}
+h4,
+h5,
+h6 {
+    font-size: 1rem;
+}
+
+hr {
+    height: 0.2em;
+    border: 0;
+    color: #CCCCCC;
+    background-color: #CCCCCC;
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+li,
+table,
+pre {
+    margin: 8px 0;
+}
+
+p {
+    margin: 1em 0;
+    line-height: 1.5rem;
+}
+
+pre {
+    background-color: #F8F8F8;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    overflow: auto;
+    padding: 5px;
+}
+
+blockquote {
+    color: #666666;
+    margin: 0;
+    border-left: 0.2em #EEE solid;
+}
+
+ul,
+ol {
+    margin: 1em 0;
+    padding: 0 0 0 2em;
+}
+
+li p:last-child {
+    margin: 0
+}
+
+dd {
+    margin: 0 0 0 2em;
+}
+
+img {
+    border: 0;
+    max-width: 300px;
+    display: block;
+    object-fit: contain;
+    width: auto !important;
+    height: auto !important;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #eee;
+}
+
+td {
+    vertical-align: top;
+    padding: 0.2em 0;
+    border-top: 1px solid #EEEEEE;
+}
