@@ -88,18 +88,9 @@
                     :required="dataForm.type==4"
                     v-if="dataForm.type==4"
                 >
-                    <el-input v-model="dataForm.image" placeholder="图片链接"></el-input>
-                    <el-upload
-                        class="upload-demo"
-                        list-type="picture"
-                        action="/wx/upload/uploadImg"
-                        :data="{'savePath':'article'}"
-                        accept="image/*"
-                        :limit="1"
-                        :on-success="imgUploadSuccess"
-                    >
-                        <el-button size="small" type="primary">上传图片</el-button>
-                    </el-upload>
+                    <el-input v-model="dataForm.image" placeholder="图片链接">
+                        <OssUploader slot="append" @uploaded="dataForm.image=$event"></OssUploader>
+                    </el-input>
                 </el-form-item>
             </el-row>
             <tinymce-editor ref="editor" v-model="dataForm.content"></tinymce-editor>
@@ -116,7 +107,8 @@ let todayStart = new Date(new Date().toLocaleDateString());
 export default {
     components: {
         TinymceEditor: () => import("@/components/tinymce-editor"),
-        tagsEditor: () => import("@/components/tags-editor")
+        tagsEditor: () => import("@/components/tags-editor"),
+        OssUploader:()=>import('../oss/oss-uploader')
     },
     data() {
         return {
