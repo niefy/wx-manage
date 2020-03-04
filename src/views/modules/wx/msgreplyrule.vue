@@ -23,8 +23,11 @@
                 <el-form-item label="ID">
                     <span>{{ props.row.ruleId }}</span>
                 </el-form-item>
+                <el-form-item label="精确匹配">
+                    <span>{{ props.row.exactMatch?'是':'否' }}</span>
+                </el-form-item>
                 <el-form-item label="是否有效">
-                    <span>{{ props.row.status }}</span>
+                    <span>{{ props.row.status?'是':'否' }}</span>
                 </el-form-item>
                 <el-form-item label="备注说明">
                     <span>{{ props.row.desc }}</span>
