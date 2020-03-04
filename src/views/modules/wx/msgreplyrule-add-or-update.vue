@@ -10,9 +10,18 @@
       ref="dataForm"
       label-width="80px"
     >
-        <el-form-item label="规则名称" prop="ruleName">
-            <el-input v-model="dataForm.ruleName" placeholder="规则名称"></el-input>
-        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+              <el-form-item label="规则名称" prop="ruleName">
+                  <el-input v-model="dataForm.ruleName" placeholder="规则名称"></el-input>
+              </el-form-item>
+          </el-col>
+          <el-col :span="12">
+              <el-form-item label="精确匹配" prop="exactMatch">
+                  <el-switch v-model="dataForm.exactMatch" :active-value="true" :inactive-value="false"></el-switch>
+              </el-form-item>
+          </el-col>
+      </el-row>
         <el-form-item label="匹配词" prop="matchValue">
             <tags-editor v-model="dataForm.matchValue"></tags-editor>
         </el-form-item>
@@ -26,7 +35,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="是否启用" prop="status">
-            <el-switch v-model="dataForm.status" :active-value="1" :inactive-value="0"></el-switch>
+            <el-switch v-model="dataForm.status" :active-value="true" :inactive-value="false"></el-switch>
           </el-form-item>
         </el-col>
       </el-row>
@@ -68,10 +77,11 @@ export default {
       dataForm: {
         ruleId: 0,
         ruleName: "",
+        exactMatch:false,
         matchValue: "",
         replyType: 'text',
         replyContent: "",
-        status: 1,
+        status: true,
         desc: "",
         effectTimeStart: "00:00:00",
         effectTimeEnd: "23:59:59"
@@ -132,6 +142,7 @@ export default {
           }).then(({ data }) => {
             if (data && data.code === 200) {
               this.dataForm.ruleName = data.msgReplyRule.ruleName;
+              this.dataForm.exactMatch=data.msgReplyRule.exactMatch;
               this.dataForm.matchValue = data.msgReplyRule.matchValue;
               this.dataForm.replyType = data.msgReplyRule.replyType;
               this.dataForm.replyContent = data.msgReplyRule.replyContent;
@@ -159,6 +170,7 @@ export default {
               ruleId: this.dataForm.ruleId || undefined,
               ruleName: this.dataForm.ruleName,
               matchValue: this.dataForm.matchValue,
+              exactMatch:this.dataForm.exactMatch,
               replyType: this.dataForm.replyType,
               replyContent: this.dataForm.replyContent,
               status: this.dataForm.status,
