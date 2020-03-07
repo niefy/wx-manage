@@ -6,7 +6,7 @@
 </template>
 
 <script>
-	var COS = require('cos-js-sdk-v5');
+	// var COS = require('cos-js-sdk-v5');
 	var cos;
 	export default {
 		name: "oss-uploader",

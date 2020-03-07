@@ -8,7 +8,7 @@
 import Editor from "@tinymce/tinymce-vue";
 // import "tinymce/themes/silver";
 
-var COS = require("cos-js-sdk-v5"); //腾讯云对象存储
+// var COS = require("cos-js-sdk-v5"); //腾讯云对象存储
 var cos;
 export default {
   name: "tinymce-editor",
