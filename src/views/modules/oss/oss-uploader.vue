@@ -6,8 +6,6 @@
 </template>
 
 <script>
-	// var COS = require('cos-js-sdk-v5');
-	var cos;
 	export default {
 		name: "oss-uploader",
 		data() {
@@ -23,12 +21,8 @@
 				method: 'get',
 				params: this.$http.adornParams()
 			}).then(({data}) => {
-				if(data && data.code === 200){
+				if(data && data.code === 200 && data.config.type){
 					this.cosConfig =  data.config
-					cos=new COS({
-						SecretId: data.config.qcloudSecretId,
-						SecretKey: data.config.qcloudSecretKey,
-					});
 				}else{
 					this.$message.error('请先配置云存储相关信息！')
 				}
@@ -44,44 +38,22 @@
 			onFileChange() {
 				let file = this.$refs.fileInput.files[0];
 				this.uploading = true;
-				let now = new Date();
-				let path=now.toISOString().slice(0,10)+'/'+now.getTime()+file.name.substr(file.name.lastIndexOf('.'))
-				cos.putObject({
-					Bucket: this.cosConfig.qcloudBucketName, /* 必须 */
-					Region: this.cosConfig.qcloudRegion,    /* 必须 */
-					Key: path,              /* 必须 */
-					Body: file, // 上传文件对象
-					onProgress: (progressData)=> {
-						this.infoText='上传中：'+progressData.percent*100+'%'
-					}
-				}, (err, data)=> {
-					console.log(err || data);
-					this.uploading = false;
-					if(data){
-						this.infoText='上传文件'
-						let fileUrl='https://'+this.cosConfig.qcloudBucketName+'.cos.'+this.cosConfig.qcloudRegion+'.myqcloud.com/'+path;
-						this.saveUploadResult(fileUrl)
-					}else {
-						this.$message.error('文件上传失败',err)
-					}
-
-				});
-			},
-			saveUploadResult(url){
+				let formData = new FormData();
+				formData.append("file",file)
 				this.$http({
 					url: this.$http.adornUrl('/sys/oss/upload'),
 					method: 'post',
-					data:{
-						url:url
-					}
+					data:formData
 				}).then(({data})=>{
-					this.$emit('uploaded', url)
+					console.log(data)
+					if (data && data.code === 200) {
+						this.$emit('uploaded', data.url)
+					} else {
+						this.$message.error("文件上传失败："+data.msg)
+					}
+					this.uploading = false;
 				})
 			}
 		}
 	}
 </script>
-
-<style scoped>
-
-</style>

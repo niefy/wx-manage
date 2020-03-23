@@ -64,9 +64,9 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
     <!-- 弹窗, 云存储配置 -->
-    <config v-if="configVisible" ref="config"></config>
+    <config v-show="configVisible" ref="config"></config>
     <!-- 弹窗, 上传文件 -->
-    <upload v-if="uploadVisible" ref="upload" @refreshDataList="getDataList"></upload>
+    <upload v-show="uploadVisible" ref="upload" @refreshDataList="getDataList"></upload>
   </div>
 </template>
 
