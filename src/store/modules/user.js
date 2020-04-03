@@ -5,10 +5,10 @@ export default {
     name: ''
   },
   mutations: {
-    updateId (state, id) {
+    updateId(state, id) {
       state.id = id
     },
-    updateName (state, name) {
+    updateName(state, name) {
       state.name = name
     }
   }

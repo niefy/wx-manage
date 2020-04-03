@@ -1,8 +1,8 @@
 <template>
-	<div @click="selectFile">
-		<input type="file" ref="fileInput" v-show="false" @change="onFileChange"/>
-		<div>{{uploading?infoText:'上传文件'}}</div>
-	</div>
+    <div @click="selectFile">
+        <input type="file" ref="fileInput" v-show="false" @change="onFileChange" />
+        <div>{{uploading?infoText:'上传文件'}}</div>
+    </div>
 </template>
 
 <script>
@@ -84,5 +84,4 @@
 </script>
 
 <style scoped>
-
 </style>

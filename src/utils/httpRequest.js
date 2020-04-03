@@ -4,7 +4,7 @@ import router from '@/router'
 import qs from 'qs'
 import merge from 'lodash/merge'
 import { clearLoginInfo } from '@/utils'
-const baseUrl='/wx'
+const baseUrl = '/wx'
 
 const http = axios.create({
   timeout: 1000 * 30,

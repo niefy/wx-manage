@@ -85,38 +85,38 @@
 </template>
 <script>
 export default {
-    props:{
-        selectedMenuLevel:{
-            type:Number,
-            default:1
+    props: {
+        selectedMenuLevel: {
+            type: Number,
+            default: 1
         },
-        button:{
-            type:Object,
-            required:true
+        button: {
+            type: Object,
+            required: true
         }
     },
-    data(){
-        return{
-            menuNameBounds:false,//菜单长度是否过长
+    data() {
+        return {
+            menuNameBounds: false,//菜单长度是否过长
         }
     },
-    methods:{
+    methods: {
         //检查菜单名称长度
-		checkMenuName:function(val){
-			if(this.selectedMenuLevel==1&&this.getMenuNameLen(val)<=10){
-                this.menuNameBounds=false
-			}else if(this.selectedMenuLevel==2&&this.getMenuNameLen(val)<=16){
-                this.menuNameBounds=false
-			}else{
-			    this.menuNameBounds=true
+        checkMenuName: function (val) {
+            if (this.selectedMenuLevel == 1 && this.getMenuNameLen(val) <= 10) {
+                this.menuNameBounds = false
+            } else if (this.selectedMenuLevel == 2 && this.getMenuNameLen(val) <= 16) {
+                this.menuNameBounds = false
+            } else {
+                this.menuNameBounds = true
             }
-		},
+        },
         //获取菜单名称长度
         getMenuNameLen: function (val) {
             var len = 0;
             for (var i = 0; i < val.length; i++) {
                 var a = val.charAt(i);
-                a.match(/[^\x00-\xff]/ig) != null?len += 2:len += 1;
+                a.match(/[^\x00-\xff]/ig) != null ? len += 2 : len += 1;
             }
             return len;
         }

@@ -1,17 +1,18 @@
 <template>
-  <div id="app">
-    <transition name="fade">
-      <router-view />
-    </transition>
-  </div>
+    <div id="app">
+        <transition name="fade">
+            <router-view />
+        </transition>
+    </div>
 </template>
 
 <style>
 img.image-sm {
-  max-width: 80px;
-  max-height: 80px;
+    max-width: 80px;
+    max-height: 80px;
 }
-.el-col .el-select,.el-col .el-date-editor{
+.el-col .el-select,
+.el-col .el-date-editor {
     width: 100%;
 }
 .demo-table-expand {
@@ -26,7 +27,7 @@ img.image-sm {
     margin-bottom: 0;
     width: 50%;
 }
-.text-warning{
-    color: #E6A23C;
+.text-warning {
+    color: #e6a23c;
 }
 </style>

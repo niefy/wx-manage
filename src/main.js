@@ -2,7 +2,7 @@
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import VueCookie from 'vue-cookie'   
+import VueCookie from 'vue-cookie'
 // import './element-ui'
 // import './element-ui-theme'
 import './assets/scss/index.scss'
@@ -17,7 +17,7 @@ Vue.prototype.$http = httpRequest // ajax请求方法
 Vue.prototype.isAuth = isAuth     // 权限方法
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

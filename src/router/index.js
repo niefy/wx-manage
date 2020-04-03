@@ -15,14 +15,14 @@ import { clearLoginInfo } from '@/utils'
 const _import = require('./import-views')
 // 全局路由(无需嵌套上左右整体布局)
 const globalRoutes = [
-  { path: '/404', component: ()=>import('@/views/common/404'), name: '404', meta: { title: '404未找到' } },
-  { path: '/login', component: ()=>import('@/views/common/login'), name: 'login', meta: { title: '登录' } }
+  { path: '/404', component: () => import('@/views/common/404'), name: '404', meta: { title: '404未找到' } },
+  { path: '/login', component: () => import('@/views/common/login'), name: 'login', meta: { title: '登录' } }
 ]
 
 // 主入口路由(需嵌套上左右整体布局)
 const mainRoutes = {
   path: '/',
-  component: ()=>import('@/views/main'),
+  component: () => import('@/views/main'),
   name: 'main',
   redirect: { name: 'home' },
   meta: { title: '主入口整体布局' },
@@ -31,12 +31,12 @@ const mainRoutes = {
     // 1. isTab: 是否通过tab展示内容, true: 是, false: 否
     // 2. iframeUrl: 是否通过iframe嵌套展示内容, '以http[s]://开头': 是, '': 否
     // 提示: 如需要通过iframe嵌套展示内容, 但不通过tab打开, 请自行创建组件使用iframe处理!
-    { path: '/home', component: ()=>import('@/views/common/home'), name: 'home', meta: { title: '首页' } },
-    { path: '/theme', component: ()=>import('@/views/common/theme'), name: 'theme', meta: { title: '主题' } },
-    { path: '/article-add-or-update', component: ()=>import('@/views/modules/wx/article-add-or-update'), name: 'article', meta: { title: '编辑文章', isTab: true } },
-    { path: '/material-news-add-or-update', component: ()=>import('@/views/modules/wx/material-news-add-or-update'), name: 'material-news', meta: { title: '图文素材' ,isDynamic:true,isTab:true} },
+    { path: '/home', component: () => import('@/views/common/home'), name: 'home', meta: { title: '首页' } },
+    { path: '/theme', component: () => import('@/views/common/theme'), name: 'theme', meta: { title: '主题' } },
+    { path: '/article-add-or-update', component: () => import('@/views/modules/wx/article-add-or-update'), name: 'article', meta: { title: '编辑文章', isTab: true } },
+    { path: '/material-news-add-or-update', component: () => import('@/views/modules/wx/material-news-add-or-update'), name: 'material-news', meta: { title: '图文素材', isDynamic: true, isTab: true } },
   ],
-  beforeEnter (to, from, next) {
+  beforeEnter(to, from, next) {
     let token = Vue.cookie.get('token')
     if (!token || !/\S/.test(token)) {
       clearLoginInfo()
@@ -64,7 +64,7 @@ router.beforeEach((to, from, next) => {
       url: http.adornUrl('/sys/menu/nav'),
       method: 'get',
       params: http.adornParams()
-    }).then(({data}) => {
+    }).then(({ data }) => {
       if (data && data.code === 200) {
         fnAddDynamicMenuRoutes(data.menuList)
         router.options.isAddDynamicMenuRoutes = true
@@ -87,7 +87,7 @@ router.beforeEach((to, from, next) => {
  * 判断当前路由类型, global: 全局路由, main: 主入口路由
  * @param {*} route 当前路由
  */
-function fnCurrentRouteType (route, globalRoutes = []) {
+function fnCurrentRouteType(route, globalRoutes = []) {
   var temp = []
   for (var i = 0; i < globalRoutes.length; i++) {
     if (route.path === globalRoutes[i].path) {
@@ -104,7 +104,7 @@ function fnCurrentRouteType (route, globalRoutes = []) {
  * @param {*} menuList 菜单列表
  * @param {*} routes 递归创建的动态(菜单)路由
  */
-function fnAddDynamicMenuRoutes (menuList = [], routes = []) {
+function fnAddDynamicMenuRoutes(menuList = [], routes = []) {
   var temp = []
   for (var i = 0; i < menuList.length; i++) {
     if (menuList[i].list && menuList[i].list.length >= 1) {
@@ -132,7 +132,7 @@ function fnAddDynamicMenuRoutes (menuList = [], routes = []) {
         try {
           route['component'] = _import(`modules/${menuList[i].url}`) || null
           // route['component'] = ()=>import(`@/views/modules/${menuList[i].url}.vue`) || null
-        } catch (e) {}
+        } catch (e) { }
       }
       routes.push(route)
     }

@@ -48,8 +48,8 @@ export default {
         updateMainTabsActiveName(state, name) {
             state.mainTabsActiveName = name
         },
-        removeTab(state,tabName) {
-            state.mainTabs=state.mainTabs.filter(item => item.name !== tabName)
+        removeTab(state, tabName) {
+            state.mainTabs = state.mainTabs.filter(item => item.name !== tabName)
             if (state.mainTabs.length >= 1) {
                 // 当前选中tab被删除
                 if (tabName === state.mainTabsActiveName) {
@@ -63,8 +63,8 @@ export default {
                 router.push({ name: 'home' })
             }
         },
-        closeCurrentTab(state){
-            this.commit('common/removeTab',state.mainTabsActiveName)
+        closeCurrentTab(state) {
+            this.commit('common/removeTab', state.mainTabsActiveName)
         }
     }
 }
