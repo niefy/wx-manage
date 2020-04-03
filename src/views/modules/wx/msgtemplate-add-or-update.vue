@@ -11,7 +11,7 @@
       <el-input v-model="dataForm.title" placeholder="标题"></el-input>
     </el-form-item>
     <el-form-item label="内容" prop="data">
-      <el-input v-model="dataForm.data" placeholder="内容"></el-input>
+      <el-input v-model="dataForm.data" type="textarea" rows="3" placeholder="内容"></el-input>
     </el-form-item>
     <el-form-item label="链接" prop="url">
       <el-input v-model="dataForm.url" placeholder="链接"></el-input>
