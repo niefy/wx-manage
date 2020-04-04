@@ -9,6 +9,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button @click="getDataList()">查询</el-button>
+                <el-button @click="syncWxUsers()" icon="el-icon-sort"  type="warning">同步粉丝</el-button>
                 <el-button v-if="isAuth('wx:user:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
             </el-form-item>
         </el-form>
@@ -25,10 +26,10 @@
             </el-table-column>
             <el-table-column prop="city" header-align="center" align="center" label="城市">
             </el-table-column>
-            <el-table-column prop="subscribeTime" header-align="center" align="center" label="订阅时间">
-            </el-table-column>
-            <el-table-column prop="subscribe" header-align="center" align="center" label="是否订阅">
+            <el-table-column prop="subscribe" header-align="center" align="center" label="是否关注">
                 <span slot-scope="scope">{{scope.row.subscribe?"是":"否"}}</span>
+            </el-table-column>
+            <el-table-column prop="subscribeTime" header-align="center" align="center" label="关注时间">
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
                 <template slot-scope="scope">
@@ -68,7 +69,7 @@ export default {
         getDataList() {
             this.dataListLoading = true
             this.$http({
-                url: this.$http.adornUrl('/manage/user/list'),
+                url: this.$http.adornUrl('/manage/wxUser/list'),
                 method: 'get',
                 params: this.$http.adornParams({
                     'page': this.pageIndex,
@@ -107,16 +108,14 @@ export default {
         },
         // 删除
         deleteHandle(id) {
-            var ids = id ? [id] : this.dataListSelections.map(item => {
-                return item.openid
-            })
+            var ids = id ? [id] : this.dataListSelections.map(item => item.openid)
             this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
                 this.$http({
-                    url: this.$http.adornUrl('/manage/user/delete'),
+                    url: this.$http.adornUrl('/manage/wxUser/delete'),
                     method: 'post',
                     data: this.$http.adornData(ids, false)
                 }).then(({ data }) => {
@@ -142,6 +141,22 @@ export default {
                 2: '女'
             }
             return sexType[cellValue];
+        },
+        syncWxUsers(){
+            this.$http({
+                    url: this.$http.adornUrl('/manage/wxUser/syncWxUsers'),
+                    method: 'post',
+                }).then(({ data }) => {
+                    if (data && data.code === 200) {
+                        this.$message({
+                            message: '同步任务已建立，请稍候刷新查看列表',
+                            type: 'success',
+                            duration: 1500
+                        })
+                    } else {
+                        this.$message.error(data.msg)
+                    }
+                })
         }
     }
 }
