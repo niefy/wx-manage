@@ -36,11 +36,13 @@ npm run build
 - 管理后台界面模板：[renren-fast-vue](https://gitee.com/renrenio/renren-fast-vue)
 - 富文本编辑器：[tinymce5](https://www.tiny.cloud/docs/quick-start/)
 
+
+
 ## 截图
-![公众号菜单](https://raw.githubusercontent.com/niefy/wx-manage/master/screenshoot/菜单管理.png)
-![带参二维码](https://raw.githubusercontent.com/niefy/wx-manage/master/screenshoot/带参二维码.png)
-![文章编辑](https://raw.githubusercontent.com/niefy/wx-manage/master/screenshoot/文章编辑.png)
-![自动回复](https://raw.githubusercontent.com/niefy/wx-manage/master/screenshoot/自动回复.png)
+![公众号菜单](https://s1.ax1x.com/2020/04/10/GTq6sI.png)
+![带参二维码](https://s1.ax1x.com/2020/04/10/GTqBJe.png)
+![文章编辑](https://s1.ax1x.com/2020/04/10/GTqrzd.png)
+![自动回复](https://s1.ax1x.com/2020/04/10/GTqyQA.png)
 
 
 # 开发进度
