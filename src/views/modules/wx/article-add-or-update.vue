@@ -67,7 +67,7 @@
 </template>
 
 <script>
-let todayStart = new Date(new Date().toLocaleDateString());
+let now = new Date();
 export default {
     components: {
         TinymceEditor: () => import("@/components/tinymce-editor"),
@@ -78,30 +78,24 @@ export default {
         return {
             dataForm: {
                 id: "",
-                type: "4",
+                type: 4,
                 title: "",
                 content: "",
                 category: "公告",
                 subCategory: "",
                 summary: "",
                 tags: "",
-                createTime: "",
-                updateTime: "",
+                createTime: now,
+                updateTime: now,
                 openCount: 0,
-                startTime: todayStart,
-                endTime: new Date(
-                    todayStart.getTime() + 24 * 60 * 60 * 1000 - 1000
-                ),
+                startTime: now,
+                endTime: new Date(now.getTime() + 24 * 60 * 60 * 1000 - 1000),
                 targetLink: location.origin + "/client/#/article/${articleId}",
                 image: ""
             },
             dataRule: {
                 type: [
-                    {
-                        required: true,
-                        message: "文章类型不能为空",
-                        trigger: "blur"
-                    }
+                    { required: true, message: "文章类型不能为空", trigger: "blur" }
                 ],
                 title: [
                     { required: true, message: "标题不能为空", trigger: "blur" }
@@ -135,28 +129,13 @@ export default {
                 this.$refs["dataForm"].resetFields();
                 if (id > 0) {
                     this.$http({
-                        url: this.$http.adornUrl(
-                            `/manage/article/info/${this.dataForm.id}`
-                        ),
+                        url: this.$http.adornUrl(`/manage/article/info/${this.dataForm.id}`),
                         method: "get",
                         params: this.$http.adornParams()
                     }).then(({ data }) => {
                         if (data && data.code === 200) {
+                            this.dataForm = data.article;
                             this.dataForm.type = data.article.type + "";
-                            this.dataForm.title = data.article.title;
-                            this.dataForm.content = data.article.content;
-                            this.dataForm.category = data.article.category;
-                            this.dataForm.summary = data.article.summary;
-                            this.dataForm.tags = data.article.tags;
-                            this.dataForm.subCategory =
-                                data.article.subCategory;
-                            this.dataForm.createTime = data.article.createTime;
-                            this.dataForm.updateTime = data.article.updateTime;
-                            this.dataForm.openCount = data.article.openCount;
-                            this.dataForm.startTime = data.article.startTime;
-                            this.dataForm.endTime = data.article.endTime;
-                            this.dataForm.targetLink = data.article.targetLink;
-                            this.dataForm.image = data.article.image;
                         }
                     });
                 }
@@ -167,31 +146,9 @@ export default {
             this.$refs["dataForm"].validate(valid => {
                 if (valid) {
                     this.$http({
-                        url: this.$http.adornUrl(
-                            `/manage/article/${
-                            !this.dataForm.id ? "save" : "update"
-                            }`
-                        ),
+                        url: this.$http.adornUrl(`/manage/article/${ !this.dataForm.id ? "save" : "update" }`),
                         method: "post",
-                        data: this.$http.adornData({
-                            id: this.dataForm.id || undefined,
-                            type: this.dataForm.type,
-                            title: this.dataForm.title,
-                            content: this.dataForm.content,
-                            category: this.dataForm.category,
-                            summary: this.dataForm.summary,
-                            tags: this.dataForm.tags,
-                            subCategory: this.dataForm.subCategory,
-                            createTime:
-                                this.dataForm.createTime ||
-                                new Date().getTime(),
-                            updateTime: new Date().getTime(),
-                            openCount: this.dataForm.openCount,
-                            startTime: this.dataForm.startTime,
-                            endTime: this.dataForm.endTime,
-                            targetLink: this.dataForm.targetLink,
-                            image: this.dataForm.image
-                        })
+                        data: this.$http.adornData(this.dataForm)
                     }).then(({ data }) => {
                         if (data && data.code === 200) {
                             this.$message({
@@ -215,7 +172,7 @@ export default {
                 this.dataForm.image = response.data;
                 console.log("this.article", this.article);
             } else {
-                this.$message({ type: "warning", message: response.msg });
+                this.$message.warning(response.msg);
             }
         },
         closeCurrentTab() {

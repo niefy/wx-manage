@@ -132,15 +132,7 @@ export default {
                         params: this.$http.adornParams()
                     }).then(({ data }) => {
                         if (data && data.code === 200) {
-                            this.dataForm.ruleName = data.msgReplyRule.ruleName;
-                            this.dataForm.exactMatch = data.msgReplyRule.exactMatch;
-                            this.dataForm.matchValue = data.msgReplyRule.matchValue;
-                            this.dataForm.replyType = data.msgReplyRule.replyType;
-                            this.dataForm.replyContent = data.msgReplyRule.replyContent;
-                            this.dataForm.status = data.msgReplyRule.status;
-                            this.dataForm.desc = data.msgReplyRule.desc;
-                            this.dataForm.effectTimeStart = data.msgReplyRule.effectTimeStart;
-                            this.dataForm.effectTimeEnd = data.msgReplyRule.effectTimeEnd;
+                            this.dataForm = data.msgReplyRule;
                         }
                     });
                 }
@@ -157,18 +149,7 @@ export default {
                             }`
                         ),
                         method: "post",
-                        data: this.$http.adornData({
-                            ruleId: this.dataForm.ruleId || undefined,
-                            ruleName: this.dataForm.ruleName,
-                            matchValue: this.dataForm.matchValue,
-                            exactMatch: this.dataForm.exactMatch,
-                            replyType: this.dataForm.replyType,
-                            replyContent: this.dataForm.replyContent,
-                            status: this.dataForm.status,
-                            desc: this.dataForm.desc,
-                            effectTimeStart: this.dataForm.effectTimeStart,
-                            effectTimeEnd: this.dataForm.effectTimeEnd
-                        })
+                        data: this.$http.adornData(this.dataForm)
                     }).then(({ data }) => {
                         if (data && data.code === 200) {
                             this.$message({

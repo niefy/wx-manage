@@ -105,9 +105,7 @@ export default {
         },
         // 删除
         deleteHandle(id) {
-            var ids = id ? [id] : this.dataListSelections.map(item => {
-                return item.id
-            })
+            var ids = id ? [id] : this.dataListSelections.map(item => item.id)
             this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -123,9 +121,7 @@ export default {
                             message: '操作成功',
                             type: 'success',
                             duration: 1500,
-                            onClose: () => {
-                                this.getDataList()
-                            }
+                            onClose: () => this.getDataList()
                         })
                     } else {
                         this.$message.error(data.msg)

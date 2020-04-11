@@ -62,11 +62,7 @@ export default {
                     this.$http({
                         url: this.$http.adornUrl(`/manage/wxQrCode/createTicket`),
                         method: 'post',
-                        data: this.$http.adornData({
-                            'isTemp': this.dataForm.isTemp,
-                            'sceneStr': this.dataForm.sceneStr,
-                            'expireSeconds': this.dataForm.expireSeconds
-                        })
+                        data: this.$http.adornData(this.dataForm)
                     }).then(({ data }) => {
                         if (data && data.code === 200) {
                             this.$message({

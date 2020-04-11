@@ -56,10 +56,7 @@ export default {
                     this.dataList = data.data.items
                     this.totalCount = data.data.totalCount
                 } else {
-                    this.$message({
-                        type: 'error',
-                        message: data.msg
-                    });
+                    this.$message.error(data.msg);
                 }
             })
         },

@@ -109,7 +109,6 @@ export default {
         delMenu() {
             if (this.selectedMenuLevel == 1 && confirm('删除后菜单下设置的内容将被删除')) {
                 this.menu.buttons.splice(this.selectedMenuIndex, 1);
-
                 this.selectedMenuLevel = 0//删除主菜单后不选中任何菜单
                 this.selectedMenuIndex = ''
                 this.selectedSubMenuIndex = ''
@@ -129,15 +128,9 @@ export default {
                 method: 'post'
             }).then(({ data }) => {
                 if (data.code == 200) {
-                    this.$message({
-                        message: '操作成功',
-                        type: 'success'
-                    })
+                    this.$message.success('操作成功')
                 } else {
-                    this.$message({
-                        type: 'error',
-                        message: data.msg
-                    });
+                    this.$message.error(data.msg);
                 }
 
             });

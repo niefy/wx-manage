@@ -124,9 +124,7 @@ export default {
                             message: '操作成功',
                             type: 'success',
                             duration: 1500,
-                            onClose: () => {
-                                this.getDataList()
-                            }
+                            onClose: () => this.getDataList()
                         })
                     } else {
                         this.$message.error(data.msg)
@@ -148,11 +146,7 @@ export default {
                     method: 'post',
                 }).then(({ data }) => {
                     if (data && data.code === 200) {
-                        this.$message({
-                            message: '同步任务已建立，请稍候刷新查看列表',
-                            type: 'success',
-                            duration: 1500
-                        })
+                        this.$message.success('同步任务已建立，请稍候刷新查看列表')
                     } else {
                         this.$message.error(data.msg)
                     }

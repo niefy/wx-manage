@@ -96,9 +96,7 @@ export default {
                             message: '操作成功',
                             type: 'success',
                             duration: 1500,
-                            onClose: () => {
-                                this.getDataList()
-                            }
+                            onClose: () => this.getDataList()
                         })
                     } else {
                         this.$message.error(data.msg)

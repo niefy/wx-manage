@@ -86,13 +86,7 @@ export default {
                         params: this.$http.adornParams()
                     }).then(({ data }) => {
                         if (data && data.code === 200) {
-                            this.dataForm.templateId = data.msgTemplate.templateId
-                            this.dataForm.title = data.msgTemplate.title
-                            this.dataForm.data = data.msgTemplate.data
-                            this.dataForm.url = data.msgTemplate.url
-                            this.dataForm.color = data.msgTemplate.color
-                            this.dataForm.status = data.msgTemplate.status
-                            this.dataForm.name = data.msgTemplate.name
+                            this.dataForm = data.msgTemplate
                         }
                     })
                 }
@@ -105,16 +99,7 @@ export default {
                     this.$http({
                         url: this.$http.adornUrl(`/manage/msgtemplate/${!this.dataForm.id ? 'save' : 'update'}`),
                         method: 'post',
-                        data: this.$http.adornData({
-                            'id': this.dataForm.id || undefined,
-                            'templateId': this.dataForm.templateId,
-                            'title': this.dataForm.title,
-                            'data': this.dataForm.data,
-                            'url': this.dataForm.url,
-                            'color': this.dataForm.color,
-                            'status': this.dataForm.status,
-                            'name': this.dataForm.name
-                        })
+                        data: this.$http.adornData(this.dataForm)
                     }).then(({ data }) => {
                         if (data && data.code === 200) {
                             this.$message({
