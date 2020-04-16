@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import AddOrUpdate from './msgreplyrule-add-or-update'
+import AddOrUpdate from './msg-reply-rule-add-or-update'
 export default {
     components: {
         AddOrUpdate
@@ -95,7 +95,7 @@ export default {
         getDataList() {
             this.dataListLoading = true
             this.$http({
-                url: this.$http.adornUrl('/manage/msgreplyrule/list'),
+                url: this.$http.adornUrl('/manage/msgReplyRule/list'),
                 method: 'get',
                 params: this.$http.adornParams({
                     'page': this.pageIndex,
@@ -146,7 +146,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 this.$http({
-                    url: this.$http.adornUrl('/manage/msgreplyrule/delete'),
+                    url: this.$http.adornUrl('/manage/msgReplyRule/delete'),
                     method: 'post',
                     data: this.$http.adornData(ids, false)
                 }).then(({ data }) => {

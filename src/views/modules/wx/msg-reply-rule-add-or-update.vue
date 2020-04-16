@@ -82,18 +82,10 @@ export default {
                     { required: true, message: "规则名称不能为空", trigger: "blur" }
                 ],
                 matchValue: [
-                    {
-                        required: true,
-                        message: "匹配的关键词、事件等不能为空",
-                        trigger: "blur"
-                    }
+                    { required: true, message: "匹配的关键词、事件等不能为空", trigger: "blur" }
                 ],
                 replyType: [
-                    {
-                        required: true,
-                        message: "回复类型（1:文本2:图文3媒体）不能为空",
-                        trigger: "blur"
-                    }
+                    { required: true, message: "回复类型（1:文本2:图文3媒体）不能为空", trigger: "blur" }
                 ],
                 replyContent: [
                     { required: true, message: "回复内容不能为空", trigger: "blur" }
@@ -125,9 +117,7 @@ export default {
                 this.$refs["dataForm"].resetFields();
                 if (this.dataForm.ruleId) {
                     this.$http({
-                        url: this.$http.adornUrl(
-                            `/manage/msgreplyrule/info/${this.dataForm.ruleId}`
-                        ),
+                        url: this.$http.adornUrl( `/manage/msgReplyRule/info/${this.dataForm.ruleId}` ),
                         method: "get",
                         params: this.$http.adornParams()
                     }).then(({ data }) => {
@@ -143,11 +133,7 @@ export default {
             this.$refs["dataForm"].validate(valid => {
                 if (valid) {
                     this.$http({
-                        url: this.$http.adornUrl(
-                            `/manage/msgreplyrule/${
-                            !this.dataForm.ruleId ? "save" : "update"
-                            }`
-                        ),
+                        url: this.$http.adornUrl(`/manage/msgReplyRule/${!this.dataForm.ruleId ? "save" : "update"}`),
                         method: "post",
                         data: this.$http.adornData(this.dataForm)
                     }).then(({ data }) => {

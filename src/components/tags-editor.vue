@@ -68,13 +68,10 @@ export default {
 .panel {
     flex: 1;
 }
-.el-tag + .el-tag {
-    margin-left: 10px;
+.el-tag,.button-new-tag{
+    margin: 5px;
 }
 .input-new-tag {
     width: inherit;
-}
-.button-new-tag {
-    margin-left: 10px;
 }
 </style>

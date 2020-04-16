@@ -2,23 +2,31 @@
     <div class="mod-config">
         <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
             <el-form-item>
-                <el-input v-model="dataForm.openid" placeholder="openid" clearable></el-input>
+                <el-select v-model="dataForm.tagid" filterable clearable placeholder="用户标签">
+                    <el-option v-for="item in wxUserTags" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item>
                 <el-input v-model="dataForm.nickname" placeholder="昵称" clearable></el-input>
             </el-form-item>
             <el-form-item>
+                <el-input v-model="dataForm.city" placeholder="城市" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
                 <el-button @click="getDataList()">查询</el-button>
-                <el-button @click="syncWxUsers()" icon="el-icon-sort"  type="warning">同步粉丝</el-button>
-                <el-button v-if="isAuth('wx:user:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+                <el-button v-if="isAuth('wx:wxuser:save')"  type="primary" @click="$refs.wxUserTagging.init('tagging')" :disabled="dataListSelections.length <= 0">绑定标签</el-button>
+                <el-button v-if="isAuth('wx:wxuser:save')"  type="primary" @click="$refs.wxUserTagging.init('untagging')" :disabled="dataListSelections.length <= 0">解绑标签</el-button>
+                <el-button v-if="isAuth('wx:wxuser:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+            </el-form-item>
+            <el-form-item class="fr">
+                <el-button  icon="el-icon-price-tag" type="success" @click="$refs.wxUserTagsEditor.show()">标签管理</el-button>
+                <el-button  icon="el-icon-sort" type="success" @click="syncWxUsers()">同步粉丝</el-button>
             </el-form-item>
         </el-form>
         <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
             <el-table-column type="selection" header-align="center" align="center" width="50">
             </el-table-column>
-            <el-table-column prop="openid" header-align="center" align="center" label="微信openid">
-            </el-table-column>
-            <el-table-column prop="phone" header-align="center" align="center" label="手机号">
+            <el-table-column prop="openid" header-align="center" align="center" label="openid">
             </el-table-column>
             <el-table-column prop="nickname" header-align="center" align="center" label="昵称">
             </el-table-column>
@@ -26,10 +34,18 @@
             </el-table-column>
             <el-table-column prop="city" header-align="center" align="center" label="城市">
             </el-table-column>
+            <el-table-column prop="headimgurl" header-align="center" align="center" label="头像">
+                <img class="headimg" slot-scope="scope" v-if="scope.row.headimgurl" :src="scope.row.headimgurl" />
+            </el-table-column>
+            <el-table-column prop="tagidList" header-align="center" align="center" label="标签" show-overflow-tooltip>
+                <template slot-scope="scope">
+                    <span v-for="tagid in scope.row.tagidList" :key="tagid">{{getTagName(tagid)}} </span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="subscribeTime" header-align="center" align="center" label="订阅时间">
+            </el-table-column>
             <el-table-column prop="subscribe" header-align="center" align="center" label="是否关注">
                 <span slot-scope="scope">{{scope.row.subscribe?"是":"否"}}</span>
-            </el-table-column>
-            <el-table-column prop="subscribeTime" header-align="center" align="center" label="关注时间">
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
                 <template slot-scope="scope">
@@ -39,30 +55,40 @@
         </el-table>
         <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper">
         </el-pagination>
+        <wx-user-tags-manager ref="wxUserTagsEditor" :visible="showWxUserTagsEditor" @close="showWxUserTagsEditor=false"></wx-user-tags-manager>
+        <wx-user-tagging ref="wxUserTagging" :wxUsers="dataListSelections"></wx-user-tagging>
     </div>
 </template>
 
 <script>
+import WxUserTagsManager from '@/components/wx-user-tags-manager'
+import WxUserTagging from './wx-user-tagging'
 export default {
     data() {
         return {
             dataForm: {
-                openid: '',
-                nickname: ''
+                tagid:'',
+                nickname: '',
+                city:''
             },
             dataList: [],
             pageIndex: 1,
             pageSize: 10,
             totalPage: 0,
             dataListLoading: false,
-            dataListSelections: []
+            dataListSelections: [],
         }
     },
     components: {
-
+        WxUserTagsManager,WxUserTagging
     },
     activated() {
         this.getDataList()
+    },
+    computed: {
+        wxUserTags() {
+            return this.$store.state.wxUserTags.tags
+        }
     },
     methods: {
         // 获取数据列表
@@ -74,23 +100,23 @@ export default {
                 params: this.$http.adornParams({
                     'page': this.pageIndex,
                     'limit': this.pageSize,
-                    'openid': this.dataForm.openid,
                     'nickname': this.dataForm.nickname,
+                    'tagid': this.dataForm.tagid,
+                    'city': this.dataForm.city,
                     'sidx': 'subscribe_time',
                     'order': 'desc'
                 })
             }).then(({ data }) => {
                 if (data && data.code === 200) {
                     this.dataList = data.page.list
-                    this.totalCount = data.page.totalCount
+                    this.totalPage = data.page.totalCount
                 } else {
                     this.dataList = []
-                    this.totalCount = 0
+                    this.totalPage = 0
                 }
                 this.dataListLoading = false
             })
         },
-
         // 每页数
         sizeChangeHandle(val) {
             this.pageSize = val
@@ -124,7 +150,9 @@ export default {
                             message: '操作成功',
                             type: 'success',
                             duration: 1500,
-                            onClose: () => this.getDataList()
+                            onClose: () => {
+                                this.getDataList()
+                            }
                         })
                     } else {
                         this.$message.error(data.msg)
@@ -132,6 +160,23 @@ export default {
                 })
             })
         },
+        syncWxUsers(){
+            this.$http({
+                    url: this.$http.adornUrl('/manage/wxUser/syncWxUsers'),
+                    method: 'post',
+                }).then(({ data }) => {
+                    if (data && data.code === 200) {
+                        this.$message({
+                            message: '同步任务已建立，请稍候刷新查看列表',
+                            type: 'success',
+                            duration: 1500
+                        })
+                    } else {
+                        this.$message.error(data.msg)
+                    }
+                })
+        },
+        
         sexFormat(row, column, cellValue) {
             let sexType = {
                 0: '未知',
@@ -140,18 +185,17 @@ export default {
             }
             return sexType[cellValue];
         },
-        syncWxUsers(){
-            this.$http({
-                    url: this.$http.adornUrl('/manage/wxUser/syncWxUsers'),
-                    method: 'post',
-                }).then(({ data }) => {
-                    if (data && data.code === 200) {
-                        this.$message.success('同步任务已建立，请稍候刷新查看列表')
-                    } else {
-                        this.$message.error(data.msg)
-                    }
-                })
+        getTagName(tagid){
+            let tag = this.wxUserTags.find(item=>item.id==tagid)
+            return tag?tag.name : "?"
         }
     }
 }
 </script>
+<style scoped>
+.headimg{
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+}
+</style>
