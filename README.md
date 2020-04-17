@@ -1,6 +1,7 @@
 # wx-manage
 微信公众号后台[wx-api](https://github.com/niefy/wx-api)项目管理系统界面，提供公众号菜单、自动回复、公众号素材、简易CMS、等管理功能，请注意本项目仅为管理后台界面，需配合后端程序[wx-api](https://github.com/niefy/wx-api)一起使用
 
+### [☁项目后端](https://github.com/niefy/wx-api) | [📖使用文档](https://github.com/niefy/wx-manage/wiki) | [📊功能投票](https://wj.qq.com/s2/5896407/a381) | [🕓版本更新记录](https://github.com/niefy/wx-manage/wiki/更新记录-versions)
 
 ## 开发环境
 - node.js
