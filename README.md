@@ -41,9 +41,15 @@ npm run build
 
 ## 截图
 ![公众号菜单](https://s1.ax1x.com/2020/04/10/GTq6sI.png)
-![带参二维码](https://s1.ax1x.com/2020/04/10/GTqBJe.png)
-![文章编辑](https://s1.ax1x.com/2020/04/10/GTqrzd.png)
 ![自动回复](https://s1.ax1x.com/2020/04/10/GTqyQA.png)
+![模板消息配置](https://s1.ax1x.com/2020/04/18/JnKZhF.jpg)
+![模板消息发送](https://s1.ax1x.com/2020/04/18/JnKEkT.jpg)
+![粉丝管理](https://s1.ax1x.com/2020/04/18/JnKVtU.jpg)
+![带参二维码](https://s1.ax1x.com/2020/04/18/JnKF00.jpg)
+![媒体素材](https://s1.ax1x.com/2020/04/18/JnKmp4.jpg)
+![文章编辑](https://s1.ax1x.com/2020/04/10/GTqrzd.png)
+![系统菜单管理](https://s1.ax1x.com/2020/04/18/JnKk7V.jpg)
+![管理员列表](https://s1.ax1x.com/2020/04/18/JnKimq.jpg)
 
 
 # 开发进度
