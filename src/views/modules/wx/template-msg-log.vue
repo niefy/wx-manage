@@ -12,17 +12,19 @@
         <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
             <el-table-column type="selection" header-align="center" align="center" width="50">
             </el-table-column>
-            <el-table-column prop="logId" header-align="center" align="center" label="ID" width="100">
+            <el-table-column prop="touser" header-align="center" align="center" label="openid" width="100">
             </el-table-column>
-            <el-table-column prop="touser" header-align="center" align="center" label="openid" width="110">
+            <el-table-column prop="data" header-align="center" align="center" :formatter="tableJsonFormat" label="内容"  width="300">
             </el-table-column>
-            <el-table-column prop="templateId" header-align="center" align="center" label="模板ID"  width="150">
-            </el-table-column>
-            <el-table-column prop="data" header-align="center" align="center" :formatter="tableJsonFormat" label="内容">
+            <el-table-column prop="sendResult" header-align="center" align="center" show-overflow-tooltip label="发送结果" width="150">
             </el-table-column>
             <el-table-column prop="sendTime" header-align="center" align="center" width="100" label="发送时间">
             </el-table-column>
-            <el-table-column prop="sendResult" header-align="center" align="center" show-overflow-tooltip label="发送结果" width="150">
+            <el-table-column prop="url" header-align="center" align="center" show-overflow-tooltip label="链接">
+            </el-table-column>
+            <el-table-column prop="miniprogram" header-align="center" align="center" :formatter="tableJsonFormat" show-overflow-tooltip label="小程序">
+            </el-table-column>
+            <el-table-column prop="templateId" header-align="center" align="center" label="模板ID"  width="150">
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
                 <template slot-scope="scope">

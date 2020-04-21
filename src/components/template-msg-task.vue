@@ -93,9 +93,9 @@ export default {
                 console.log(tagItem)
                 if(tagItem) {
                     this.dataForm.tagid=tagItem.id+''
-                    this.getWxUsers()
                 }
             }
+            this.getWxUsers()
         });
     },
     methods:{

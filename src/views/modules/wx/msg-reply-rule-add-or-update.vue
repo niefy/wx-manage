@@ -168,7 +168,7 @@ export default {
                 let demo = { head_content: "开头文字", list: [{ id: "菜单1ID", content: "菜单2内容" }, { id: "菜单2ID", content: "菜单2内容" }, { id: "菜单nID", content: "菜单n内容" }], tail_content: "结尾文字" }
                 this.dataForm.replyContent = JSON.stringify(demo, null, 4)
             } else {
-                this.dataForm.replyContent = ''
+                this.dataForm.replyContent = '媒体素材media_id'
             }
         }
     }
