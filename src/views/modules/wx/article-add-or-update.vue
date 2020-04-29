@@ -18,9 +18,7 @@
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="一级目录" prop="category">
-                        <el-select v-model="dataForm.category" placeholder="一级目录" allow-create>
-                            <el-option v-for="name in ARTICLE_CATEGORIES" :key="name" :label="name" :value="name" allow-create></el-option>
-                        </el-select>
+                        <el-input :maxlength="50" v-model="dataForm.category" placeholder="一级目录"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -29,29 +27,17 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row v-if="dataForm.type>=2 && dataForm.type<=4">
-                <el-col :span="12">
-                    <el-form-item label="生效时间" prop="startTime">
-                        <el-date-picker v-model="dataForm.startTime" type="datetime" default-time="00:00:00" placeholder="选择日期时间" value-format="timestamp"></el-date-picker>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="12">
-                    <el-form-item label="失效时间" prop="endTime">
-                        <el-date-picker v-model="dataForm.endTime" type="datetime" default-time="22:00:00" placeholder="选择日期时间" value-format="timestamp"></el-date-picker>
-                    </el-form-item>
-                </el-col>
-            </el-row>
             <el-form-item label="指向外链" prop="targetLink">
                 <el-input v-model="dataForm.targetLink" placeholder="指向外链"></el-input>
             </el-form-item>
-            <el-form-item label="摘要" prop="summary" v-if="dataForm.type==1 || dataForm.type==5">
+            <el-form-item label="摘要" prop="summary">
                 <el-input v-model="dataForm.summary" placeholder="摘要" type="textarea" rows="3" maxlength="512" show-word-limit></el-input>
             </el-form-item>
             <el-form-item label="标签" prop="tags">
                 <tags-editor v-model="dataForm.tags"></tags-editor>
             </el-form-item>
             <el-row>
-                <el-form-item label="图片地址" prop="image" :required="dataForm.type==4" v-if="dataForm.type==4">
+                <el-form-item label="文章首图" prop="image">
                     <el-input v-model="dataForm.image" placeholder="图片链接">
                         <OssUploader slot="append" @uploaded="dataForm.image=$event"></OssUploader>
                     </el-input>
@@ -67,7 +53,6 @@
 </template>
 
 <script>
-let now = new Date();
 export default {
     components: {
         TinymceEditor: () => import("@/components/tinymce-editor"),
@@ -78,18 +63,14 @@ export default {
         return {
             dataForm: {
                 id: "",
-                type: 4,
+                type: '1',
                 title: "",
                 content: "",
-                category: "公告",
+                category: "",
                 subCategory: "",
                 summary: "",
                 tags: "",
-                createTime: now,
-                updateTime: now,
                 openCount: 0,
-                startTime: now,
-                endTime: new Date(now.getTime() + 24 * 60 * 60 * 1000 - 1000),
                 targetLink: location.origin + "/client/#/article/${articleId}",
                 image: ""
             },
@@ -110,11 +91,6 @@ export default {
         ARTICLE_TYPES: {
             get() {
                 return this.$store.state.article.ARTICLE_TYPES;
-            }
-        },
-        ARTICLE_CATEGORIES: {
-            get() {
-                return this.$store.state.article.ARTICLE_CATEGORIES;
             }
         }
     },

@@ -20,7 +20,7 @@
             </el-table-column>
             <el-table-column prop="id" header-align="center" align="center" label="ID">
             </el-table-column>
-            <el-table-column prop="type" header-align="center" align="center" label="文章类型">
+            <el-table-column prop="type" header-align="center" align="center" label="文章类型" :formatter="articleTypeFormat">
             </el-table-column>
             <el-table-column prop="title" header-align="center" align="center" show-overflow-tooltip label="标题">
                 <a :href="scope.row.targetLink" slot-scope="scope">{{scope.row.title}}</a>
