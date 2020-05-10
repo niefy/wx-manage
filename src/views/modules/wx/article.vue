@@ -31,18 +31,24 @@
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
                 <template slot-scope="scope">
-                    <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+                    <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row)">修改</el-button>
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
         <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalCount" layout="total, sizes, prev, pager, next, jumper">
         </el-pagination>
+        <!-- 弹窗, 新增 / 修改  -->
+        <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
     </div>
 </template>
 
 <script>
+import AddOrUpdate from './article-add-or-update'
 export default {
+    components: {
+        AddOrUpdate
+    },
     data() {
         return {
             dataForm: {
@@ -65,11 +71,8 @@ export default {
             }
         }
     },
-    components: {
-    },
-    activated() {
+    mounted() {
         this.getDataList()
-        console.log(this.ARTICLE_TYPES)
     },
     methods: {
         // 获取数据列表
@@ -113,13 +116,11 @@ export default {
             this.dataListSelections = val
         },
         // 新增 / 修改
-        addOrUpdateHandle(id) {
-            // this.addOrUpdateVisible = true
-            // this.$nextTick(() => {
-            //   this.$refs.addOrUpdate.init(id)
-            // })
-            id = id || ''
-            this.$router.push('/article-add-or-update?id=' + id)
+        addOrUpdateHandle(article) {
+            this.addOrUpdateVisible = true
+            this.$nextTick(() => {
+                this.$refs.addOrUpdate.init(article || '')
+            })
         },
         // 删除
         deleteHandle(id) {
