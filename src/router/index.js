@@ -34,7 +34,7 @@ const mainRoutes = {
     { path: '/home', component: () => import('@/views/common/home'), name: 'home', meta: { title: '首页' } },
     { path: '/theme', component: () => import('@/views/common/theme'), name: 'theme', meta: { title: '主题' } },
     { path: '/article-add-or-update', component: () => import('@/views/modules/wx/article-add-or-update'), name: 'article', meta: { title: '编辑文章', isTab: true } },
-    { path: '/material-news-add-or-update', component: () => import('@/views/modules/wx/material-news-add-or-update'), name: 'material-news', meta: { title: '图文素材', isDynamic: true, isTab: true } },
+    { path: '/material-news-add-or-update', component: () => import('@/views/modules/wx/material-news-add-or-update'), name: 'material-news', meta: { title: '编辑图文素材', isTab: true } },
   ],
   beforeEnter(to, from, next) {
     let token = Vue.cookie.get('token')

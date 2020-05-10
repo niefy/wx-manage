@@ -4,18 +4,37 @@
             <el-form-item label="标题" prop="title">
                 <el-input v-model="dataForm.title" placeholder="标题"></el-input>
             </el-form-item>
-            <el-form-item label="链接" prop="url">
-                <el-input v-model="dataForm.url" placeholder="链接"></el-input>
-            </el-form-item>
-            <el-form-item label="阅读原文链接" prop="contentSourceUrl">
-                <el-input v-model="dataForm.contentSourceUrl" placeholder="阅读原文链接"></el-input>
-            </el-form-item>
-            <el-form-item label="描述" prop="digest">
-                <el-input v-model="dataForm.digest" placeholder="描述"></el-input>
-            </el-form-item>
             <el-form-item label="media_id" prop="thumbMediaId">
                 <el-input v-model="dataForm.thumbMediaId" placeholder="封面图media_id"></el-input>
             </el-form-item>
+            <el-form-item label="摘要" prop="digest">
+                <el-input v-model="dataForm.digest" placeholder="摘要"></el-input>
+            </el-form-item>
+            <el-form-item label="原文地址" prop="contentSourceUrl">
+                <el-input v-model="dataForm.contentSourceUrl" placeholder="阅读原文链接"></el-input>
+            </el-form-item>
+            <el-row>
+                <el-col  :span="6">
+                    <el-form-item label="作者" prop="author">
+                        <el-input v-model="dataForm.author" placeholder="作者"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col  :span="6">
+                    <el-form-item label="显示封面" prop="showCoverPic">
+                        <el-switch v-model="dataForm.showCoverPic"></el-switch>
+                    </el-form-item>
+                </el-col>
+                <el-col  :span="6">
+                    <el-form-item label="允许评论" prop="needOpenComment">
+                        <el-switch v-model="dataForm.needOpenComment"></el-switch>
+                    </el-form-item>
+                </el-col>
+                <el-col  :span="6">
+                    <el-form-item label="仅粉丝可评论" prop="onlyFansCanComment">
+                        <el-switch v-model="dataForm.onlyFansCanComment"></el-switch>
+                    </el-form-item>
+                </el-col>
+            </el-row>
             <el-form-item label="内容" prop="content">
                 <tinymce-editor ref="editor" v-model="dataForm.content"> </tinymce-editor>
             </el-form-item>
@@ -38,11 +57,13 @@ export default {
                 templateId: 0,
                 title: '',
                 content: '',
+                author:'',
                 showCoverPic: true,
-                url: '',
                 contentSourceUrl: '',
                 digest: '',
-                thumbMediaId: ''
+                thumbMediaId: '',
+                needOpenComment:false,
+                onlyFansCanComment:false
             },
             dataRule: {
                 title: [
@@ -53,6 +74,9 @@ export default {
                 ],
                 thumbMediaId: [
                     { required: true, message: '封面图media_id不能为空', trigger: 'blur' }
+                ],
+                contentSourceUrl:[
+                    { required: true, message: '原文地址不得为空', trigger: 'blur' }
                 ]
             }
         }

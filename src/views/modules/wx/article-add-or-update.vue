@@ -36,13 +36,11 @@
             <el-form-item label="标签" prop="tags">
                 <tags-editor v-model="dataForm.tags"></tags-editor>
             </el-form-item>
-            <el-row>
-                <el-form-item label="文章首图" prop="image">
-                    <el-input v-model="dataForm.image" placeholder="图片链接">
-                        <OssUploader slot="append" @uploaded="dataForm.image=$event"></OssUploader>
-                    </el-input>
-                </el-form-item>
-            </el-row>
+            <el-form-item label="文章首图" prop="image">
+                <el-input v-model="dataForm.image" placeholder="图片链接">
+                    <OssUploader slot="append" @uploaded="dataForm.image=$event"></OssUploader>
+                </el-input>
+            </el-form-item>
             <tinymce-editor ref="editor" v-model="dataForm.content"></tinymce-editor>
         </el-form>
         <div class="footer">

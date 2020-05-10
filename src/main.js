@@ -9,7 +9,9 @@ import './assets/css/common.css'
 import './assets/scss/index.scss'
 import httpRequest from '@/utils/httpRequest' // api: https://github.com/axios/axios
 import { isAuth } from '@/utils'
+import VueClipboard from 'vue-clipboard2'
 
+Vue.use(VueClipboard)
 Vue.use(VueCookie)
 Vue.config.productionTip = false
 

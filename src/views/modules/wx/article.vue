@@ -114,10 +114,6 @@ export default {
         },
         // 新增 / 修改
         addOrUpdateHandle(id) {
-            // this.addOrUpdateVisible = true
-            // this.$nextTick(() => {
-            //   this.$refs.addOrUpdate.init(id)
-            // })
             id = id || ''
             this.$router.push('/article-add-or-update?id=' + id)
         },

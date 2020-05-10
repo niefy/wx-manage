@@ -2,10 +2,13 @@
     <div class="mod-menu">
         <el-form :inline="true" :model="dataForm">
             <el-form-item>
-                <el-button v-if="isAuth('wx:material:save')" type="primary" @click="addOrUpdateHandle">新增</el-button>
+                <el-button size="mini" v-if="isAuth('wx:wxassets:save')" type="primary" @click="addOrUpdateHandle()">新增（开发中...）</el-button>
             </el-form-item>
         </el-form>
-        <el-table :data="dataList" border v-loading="dataListLoading" style="width: 100%;">
+        <div v-loading="dataListLoading">
+            开发中...
+        </div>
+        <!-- <el-table :data="dataList" border v-loading="dataListLoading" style="width: 100%;">
             <el-table-column prop="mediaId" header-align="center" align="center" label="素材mediaId">
             </el-table-column>
             <el-table-column prop="content" header-align="center" align="center" label="首篇图文">
@@ -21,13 +24,20 @@
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.mediaId)">删除</el-button>
                 </template>
             </el-table-column>
-        </el-table>
+        </el-table> -->
         <el-pagination @current-change="currentChangeHandle" :current-page="pageIndex" :page-size="pageSize" :total="totalCount" layout="total, prev,pager, next, jumper">
         </el-pagination>
     </div>
 </template>
 <script>
 export default {
+    name:'material-news',
+    props:{
+        selectMode:{// 是否选择模式，选择模式下点击素材选中，不可新增和删除
+            type:Boolean,
+            default:false
+        }
+    },
     data() {
         return {
             dataForm: {},
@@ -39,11 +49,14 @@ export default {
             dataListLoading: false
         }
     },
-    mounted() {
-        this.materialNewsBatchGet()
-    },
     methods: {
+        init(){
+            if(!this.dataList.length){
+                this.materialNewsBatchGet()
+            }
+        },
         materialNewsBatchGet() {
+            if(this.dataListLoading) return
             this.dataListLoading = true
             this.$http({
                 url: this.$http.adornUrl('/manage/wxAssets/materialNewsBatchGet'),
@@ -51,13 +64,14 @@ export default {
                     'page': this.pageIndex
                 })
             }).then(({ data }) => {
-                this.dataListLoading = false
+                
                 if (data.code == 200) {
                     this.dataList = data.data.items
                     this.totalCount = data.data.totalCount
                 } else {
                     this.$message.error(data.msg);
                 }
+                this.dataListLoading = false
             })
         },
         loadTree(tree, treeNode, resolve) {
@@ -98,11 +112,8 @@ export default {
         },
         // 新增 / 修改
         addOrUpdateHandle(id) {
-            // id = id || ''
-            // this.$router.push('/material-news-add-or-update?id='+id)
-            this.$message.info("请前往公众号后台编辑！")
-            setTimeout(() => window.open('https://mp.weixin.qq.com/'), 1500)
-
+            id = id || ''
+            this.$router.push('/material-news-add-or-update?id='+id)
         }
 
     }
