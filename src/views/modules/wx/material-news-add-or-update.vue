@@ -127,8 +127,15 @@ export default {
                 data: this.$http.adornData(this.articles,false)
             }).then(({ data }) => {
                 if (data && data.code === 200) {
-                    this.$message.success('操作成功')
-                    this.mediaId=data.data.mediaId
+                    this.$message({
+                        message: "操作成功",
+                        type: "success",
+                        duration: 1500,
+                        onClose: () => {
+                            this.visible = false;
+                            this.$emit("refreshDataList");
+                        }
+                    });
                 } else {
                     this.$message.error(data.msg)
                 }
@@ -157,9 +164,6 @@ export default {
         addArticle(){
             this.articles.push({...articleTemplate})
             this.selectedIndex=this.articles.length-1
-        },
-        closeCurrentTab() {
-            this.$store.commit("common/closeCurrentTab");
         }
     }
 }

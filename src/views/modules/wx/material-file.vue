@@ -16,15 +16,14 @@
                 <div class="card-footer">
                     <div class="text-cut-name">{{item.name}}</div>
                     <div class="text-right">{{item.updateTime}}</div>
-                </div>
-                <div class="card-operation">
-                    <el-button size="small" type="success" icon="el-icon-check" round v-if="selectMode" @click="$emit('selected',item)">选中</el-button>
-                    <div v-else>
-                        <el-button size="mini" type="success" icon="el-icon-copy-document" round  v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
-                        <el-button size="mini" type="danger" icon="el-icon-delete" round  @click="deleteHandle(item.mediaId)" >删除</el-button>
+                    <div class="flex justify-end align-center">
+                        <el-button v-if="selectMode" type="text" size="small" icon="el-icon-check" @click="$emit('selected',item)">选中</el-button>
+                        <template v-else>
+                            <el-button size="mini" type="text" icon="el-icon-delete"  @click="deleteHandle(item.mediaId)" >删除</el-button>
+                            <el-button size="mini" type="text" icon="el-icon-copy-document"  v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
+                        </template>
                     </div>
                 </div>
-                
             </div>
         </div>
         <el-pagination @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[20]" :page-size="pageSize" :total="totalCount" layout="total, prev,pager, next, jumper">
@@ -150,6 +149,7 @@ export default {
     margin: 0 10px 10px 0;
     vertical-align: top;
     border-radius: 5px;
+    padding: 15px 10px;
 }
 .card-image{
     line-height: 200px;
@@ -171,19 +171,9 @@ export default {
     font-size: 12px;
 }
 .card-footer{
-    height: 55px;
-    /* margin-top: -55px; */
+    color: #ccc;
     font-size: 12px;
-    background: rgba(0, 0, 0,0.3);
-    color: #ffffff;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 5px 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    margin-top: 10px;
 }
 .text-cut-name{
     display: -webkit-box;
@@ -192,21 +182,6 @@ export default {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
-}
-.card-operation{
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.card-operation:hover{
-    background: rgba(64, 158, 255,0.7);
-    opacity: 1;
+    text-align: right;
 }
 </style>

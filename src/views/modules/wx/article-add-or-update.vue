@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="80px">
+    <el-dialog :title="dataForm.id ? '修改' : '新增'" :close-on-click-modal="false" :visible.sync="visible" width="85%" top="0">
+        <el-form :model="dataForm" :rules="dataRule" ref="dataForm" size="mini" label-width="80px">
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="文章标题" prop="title" required>
@@ -43,15 +43,16 @@
             </el-form-item>
             <tinymce-editor ref="editor" v-model="dataForm.content"></tinymce-editor>
         </el-form>
-        <div class="footer">
-            <el-button @click="closeCurrentTab">取消</el-button>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="visible = false">取消</el-button>
             <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
         </div>
-    </div>
+    </el-dialog>
 </template>
 
 <script>
 export default {
+    name:'article-add-or-update',
     components: {
         TinymceEditor: () => import("@/components/tinymce-editor"),
         tagsEditor: () => import("@/components/tags-editor"),
@@ -59,6 +60,7 @@ export default {
     },
     data() {
         return {
+            visible: false,
             dataForm: {
                 id: "",
                 type: '1',
@@ -92,28 +94,17 @@ export default {
             }
         }
     },
-    mounted() {
-        let id = this.$route.query.id;
-        this.init(id);
-    },
     methods: {
-        init(id) {
-            this.dataForm.id = id || "";
-            this.$nextTick(() => {
-                this.$refs["dataForm"].resetFields();
-                if (id > 0) {
-                    this.$http({
-                        url: this.$http.adornUrl(`/manage/article/info/${this.dataForm.id}`),
-                        method: "get",
-                        params: this.$http.adornParams()
-                    }).then(({ data }) => {
-                        if (data && data.code === 200) {
-                            this.dataForm = data.article;
-                            this.dataForm.type = data.article.type + "";
-                        }
-                    });
-                }
-            });
+        init(article) {
+            this.visible = true
+            if(article && article.id){
+                this.dataForm = article;
+                this.dataForm.type = article.type + "";
+            }else{
+                this.$nextTick(() => {
+                    this.$refs["dataForm"].resetFields()
+                })
+            }
         },
         // 表单提交
         dataFormSubmit() {
@@ -130,7 +121,8 @@ export default {
                                 type: "success",
                                 duration: 1500,
                                 onClose: () => {
-                                    this.closeCurrentTab();
+                                    this.visible = false;
+                                    this.$emit("refreshDataList");
                                 }
                             });
                         } else {
@@ -148,15 +140,7 @@ export default {
             } else {
                 this.$message.warning(response.msg);
             }
-        },
-        closeCurrentTab() {
-            this.$store.commit("common/closeCurrentTab");
         }
     }
 };
 </script>
-<style scoped>
-.footer {
-    margin-top: 20px;
-}
-</style>

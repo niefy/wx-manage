@@ -13,16 +13,16 @@
                         <el-image class="article-thumb" :src="article.thumbUrl"></el-image>
                     </a>
                 </div>
-                <div class="card-footer" v-if="!selectMode">
+                <div class="card-footer" >
                     <div class="text-right">{{item.updateTime}}</div>
-                    <div class="flex justify-between align-center">
-                        <el-button size="mini" type="text" icon="el-icon-copy-document"  v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
-                        <el-button size="mini" type="text" icon="el-icon-edit" @click="addOrUpdateHandle(item)">编辑</el-button>
-                        <el-button size="mini" type="text" icon="el-icon-delete"  @click="deleteHandle(item.mediaId)" >删除</el-button>
+                    <div class="flex justify-end align-center">
+                        <el-button v-if="selectMode" type="text" icon="el-icon-check" round  @click="$emit('selected',item)">选中</el-button>
+                        <template v-else>
+                            <el-button size="mini" type="text" icon="el-icon-delete"  @click="deleteHandle(item.mediaId)" >删除</el-button>
+                            <el-button size="mini" type="text" icon="el-icon-copy-document"  v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
+                            <el-button size="mini" type="text" icon="el-icon-edit" @click="addOrUpdateHandle(item)">编辑</el-button>
+                        </template>
                     </div>
-                </div>
-                <div class="card-operation" v-else>
-                    <el-button size="small" type="success" icon="el-icon-check" round  @click="$emit('selected',item)">选中</el-button>
                 </div>
             </div>
         </div>
@@ -121,7 +121,6 @@ export default {
             this.$nextTick(() => {
                 this.$refs.addOrUpdate.init(news|| '')
             })
-            // this.$router.push('/material-news-add-or-update?mediaId='+mediaId)
         },
         onCopySuccess(){
             this.$message.success('已复制')
@@ -146,19 +145,17 @@ export default {
     margin: 0 10px 10px 0;
     border-radius: 5px;
     vertical-align: top;
+    padding: 15px 10px;
 }
 
 .card-preview{
-    padding: 10px 10px;
     color: #d9d9d9;
 }
 .article-item{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-}
-.article-item:not(:first-of-type){
-    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eee;
 }
 .article-title{
     display: -webkit-box;
@@ -177,26 +174,7 @@ export default {
 }
 .card-footer{
     font-size: 12px;
-    background: rgba(0, 0, 0,0.6);
-    color: #ffffff;
-    padding: 5px 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-.card-operation{
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.card-operation:hover{
-    background: rgba(64, 158, 255,0.7);
-    opacity: 1;
+    color: #ccc;
+    margin-top: 10px;
 }
 </style>
