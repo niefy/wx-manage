@@ -1,6 +1,6 @@
 <template>
     <div class="mod-menu">
-        <el-form :inline="true" :model="dataForm">
+        <el-form  v-if="!selectMode" :inline="true" :model="dataForm">
             <el-form-item>
                 <el-button size="mini" v-if="isAuth('wx:wxassets:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
             </el-form-item>
@@ -149,6 +149,7 @@ export default {
     border: 1px solid #eee;
     margin: 0 10px 10px 0;
     vertical-align: top;
+    border-radius: 5px;
 }
 .card-image{
     line-height: 200px;

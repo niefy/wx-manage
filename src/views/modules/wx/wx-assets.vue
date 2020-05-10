@@ -20,7 +20,7 @@ import MaterialNews from './material-news'
 export default {
     data() {
         return {
-            activeTab: 'image',
+            activeTab: 'news',
             assetsCount:{
                 imageCount:'..',
                 videoCount:'..',
