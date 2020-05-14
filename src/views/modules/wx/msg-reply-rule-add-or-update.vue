@@ -45,6 +45,9 @@
             <el-form-item label="回复内容" prop="replyContent">
                 <el-input v-model="dataForm.replyContent" type="textarea" :rows="5" placeholder="文本、图文ID、media_id、json配置"></el-input>
                 <el-button type="text" v-show="'text'==dataForm.replyType" @click="addLink">插入链接</el-button>
+                <el-button type="text" v-show="assetsType" @click="assetsSelectorVisible=true">
+                    从素材库中选择<span v-if="'miniprogrampage'==dataForm.replyType || 'music'==dataForm.replyType">缩略图</span>
+                </el-button>
             </el-form-item>
             <el-form-item label="备注说明" prop="desc">
                 <el-input v-model="dataForm.desc" placeholder="备注说明"></el-input>
@@ -54,17 +57,20 @@
             <el-button @click="visible = false">取消</el-button>
             <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
         </span>
+        <assets-selector v-if="assetsSelectorVisible && assetsType" :visible="assetsSelectorVisible" :selectType="assetsType" @selected="onAssetsSelect"></assets-selector>
     </el-dialog>
 </template>
 
 <script>
 export default {
     components: {
-        tagsEditor: () => import('@/components/tags-editor')
+        tagsEditor: () => import('@/components/tags-editor'),
+        AssetsSelector:()=>import('./assets/assets-selector')
     },
     data() {
         return {
             visible: false,
+            assetsSelectorVisible:false,
             dataForm: {
                 ruleId: 0,
                 ruleName: "",
@@ -107,6 +113,17 @@ export default {
             get() {
                 return this.$store.state.message.KefuMsgType
             }
+        },
+        assetsType(){
+            const config={//消息类型与选择素材类型对应关系
+                'image':'image',
+                'voice':'voice',
+                'video':'video',
+                'mpnews':'news',
+                'miniprogrampage':'image',//小程序需选择卡片图
+                'music':'image'
+            }
+            return config[this.dataForm.replyType] || ''
         }
     },
     methods: {
@@ -172,6 +189,16 @@ export default {
             } else {
                 this.dataForm.replyContent = '媒体素材media_id'
             }
+        },
+        onAssetsSelect(assetsInfo){
+            if(this.dataForm.replyType=='miniprogrampage' || this.dataForm.replyType=='music'){
+                let data = JSON.parse(this.dataForm.replyContent)
+                if(data && data.thumb_media_id)data.thumb_media_id=assetsInfo.mediaId
+                this.dataForm.replyContent = JSON.stringify(data, null, 4)
+            }else{
+                this.dataForm.replyContent = assetsInfo.mediaId
+            }
+            this.assetsSelectorVisible=false
         }
     }
 };

@@ -6,14 +6,16 @@
                 <div class="card-item" :class="{'selected':selectedIndex==index}" v-for="(item,index) in articles" :key="index" @click="selectedIndex=index">
                     <div class="text-cut-name">{{item.title}}</div>
                 </div>
-                <div v-show="articles.length<8" class="card-add el-icon-plus" @click="addArticle()"></div>
+                <div v-show="articles.length<8 && !mediaId" class="card-add el-icon-plus" @click="addArticle()"></div>
             </div>
-            <el-form size="mini" :model="articles[selectedIndex]" :rules="dataRule" ref="dataForm" label-width="100px">
+            <el-form size="mini" v-if="articles.length" :model="articles[selectedIndex]" :rules="dataRule" ref="dataForm" label-width="100px">
                 <el-form-item label="标题" prop="title">
                     <el-input v-model="articles[selectedIndex].title" placeholder="标题"></el-input>
                 </el-form-item>
-                <el-form-item label="media_id" prop="thumbMediaId">
-                    <el-input v-model="articles[selectedIndex].thumbMediaId" placeholder="封面图media_id"></el-input>
+                <el-form-item label="封面图" prop="thumbMediaId">
+                    <el-input v-model="articles[selectedIndex].thumbMediaId" placeholder="封面图media_id">
+                        <div slot="append" @click="assetsSelectorVisible=true">从素材库中选择</div>
+                    </el-input>
                 </el-form-item>
                 <el-form-item label="摘要" prop="digest">
                     <el-input v-model="articles[selectedIndex].digest" placeholder="摘要"></el-input>
@@ -52,6 +54,7 @@
             <el-button @click="visible = false">取消</el-button>
             <el-button type="primary" @click="dataFormSubmit()" :disabled="uploading">{{this.mediaId?'修改此篇':'全部提交（共'+articles.length+'篇）'}}</el-button>
         </div>
+        <assets-selector v-if="assetsSelectorVisible" :visible="assetsSelectorVisible" selectType="image" @selected="onAssetsSelect"></assets-selector>
     </el-dialog>
 </template>
 
@@ -70,11 +73,13 @@ const articleTemplate={
 }
 export default {
     components: {
-        TinymceEditor: () => import('@/components/tinymce-editor')
+        TinymceEditor: () => import('@/components/tinymce-editor'),
+        AssetsSelector:()=>import('./assets-selector')
     },
     data() {
         return {
             visible: false,
+            assetsSelectorVisible:false,
             mediaId:'',
             selectedIndex:0,
             articles:[],
@@ -164,6 +169,10 @@ export default {
         addArticle(){
             this.articles.push({...articleTemplate})
             this.selectedIndex=this.articles.length-1
+        },
+        onAssetsSelect(assetsInfo){
+            Vue.set(this.articles[this.selectedIndex], 'thumbMediaId', assetsInfo.mediaId)
+            this.assetsSelectorVisible=false
         }
     }
 }

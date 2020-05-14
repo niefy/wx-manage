@@ -1,39 +1,35 @@
 <template>
     <div class="mod-menu">
-        <el-form  v-if="!selectMode" :inline="true" :model="dataForm">
+        <el-form :inline="true" :model="dataForm">
             <el-form-item>
                 <el-button size="mini" v-if="isAuth('wx:wxassets:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
             </el-form-item>
         </el-form>
         <div v-loading="dataListLoading">
-            <div class="card" v-for="item in dataList" :key="item.mediaId">
+            <div class="card" v-for="item in dataList" :key="item.mediaId" @click="onSelect(item)">
                 <el-image v-if="fileType=='image'" class="card-image" :src="item.url" fit="contain" lazy></el-image>
                 <div v-else class="card-preview">
                     <div v-if="fileType=='voice'" class="card-preview-icon el-icon-microphone"></div>
                     <div v-if="fileType=='video'" class="card-preview-icon el-icon-video-camera-solid"></div>
-                    <div class="card-preview-text">管理后台不支持预览<br/>发送到微信后可正常播放</div>
+                    <div class="card-preview-text">管理后台不支持预览<br/>微信中可正常播放</div>
                 </div>
                 <div class="card-footer">
                     <div class="text-cut-name">{{item.name}}</div>
                     <div class="text-right">{{item.updateTime}}</div>
-                    <div class="flex justify-end align-center">
-                        <el-button v-if="selectMode" type="text" size="small" icon="el-icon-check" @click="$emit('selected',item)">选中</el-button>
-                        <template v-else>
-                            <el-button size="mini" type="text" icon="el-icon-delete"  @click="deleteHandle(item.mediaId)" >删除</el-button>
-                            <el-button size="mini" type="text" icon="el-icon-copy-document"  v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
-                        </template>
+                    <div class="flex justify-between align-center">
+                        <el-button size="mini" type="text" icon="el-icon-copy-document"  v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
+                        <el-button size="mini" type="text" icon="el-icon-delete"  @click="deleteHandle(item.mediaId)" >删除</el-button>
                     </div>
                 </div>
             </div>
         </div>
-        <el-pagination @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[20]" :page-size="pageSize" :total="totalCount" layout="total, prev,pager, next, jumper">
+        <el-pagination @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[20]" :page-size="20" :total="totalCount" layout="total, prev,pager, next, jumper">
         </el-pagination>
         <!-- 弹窗, 新增 / 修改 -->
         <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="onChange"></add-or-update>
     </div>
 </template>
 <script>
-import AddOrUpdate from './material-file-add-or-update'
 export default {
     name:'material-file',
     props:{
@@ -47,7 +43,7 @@ export default {
         }
     },
     components: {
-        AddOrUpdate
+        AddOrUpdate:()=>import('./material-file-add-or-update')
     },
     data() {
         return {
@@ -60,13 +56,16 @@ export default {
             dataListLoading: false,
         }
     },
+    mounted(){
+        this.init()
+    },
     methods: {
         init(){
             if(!this.dataList.length){
-                this.materialFileBatchGet()
+                this.getDataList()
             }
         },
-        materialFileBatchGet() {
+        getDataList() {
             if(this.dataListLoading) return
             this.dataListLoading = true
             this.$http({
@@ -79,6 +78,7 @@ export default {
                 if (data && data.code == 200) {
                     this.dataList = data.data.items
                     this.totalCount = data.data.totalCount
+                     this.pageIndex++;
                 } else {
                     this.$message.error(data.msg);
                 }
@@ -91,6 +91,10 @@ export default {
             this.$nextTick(() => {
                 this.$refs.addOrUpdate.init(this.fileType)
             })
+        },
+        onSelect(itemInfo){
+            if(!this.selectMode)return
+            this.$emit('selected',itemInfo)
         },
         //删除
         deleteHandle(id) {
@@ -110,7 +114,7 @@ export default {
                             type: 'success',
                             duration: 1500,
                             onClose: () => {
-                                this.materialFileBatchGet()
+                                this.getDataList()
                                 this.$emit('change')
                             }
                         })
@@ -132,7 +136,7 @@ export default {
             this.$message.error('复制失败,可能是此浏览器不支持复制')
         },
         onChange(){
-            this.materialFileBatchGet()
+            this.getDataList()
             this.$emit('change')
         }
 
@@ -141,20 +145,24 @@ export default {
 </script>
 <style scoped>
 .card{
-    width: 240px;
-    min-height: 120px;
+    width: 170px;
     display: inline-block;
-    position: relative;
-    border: 1px solid #eee;
+    background: #FFFFFF;
+    border: 1px solid #EBEEF5;
+    box-shadow: 1px 1px 20px 0 rgba(0, 0, 0, 0.1);
     margin: 0 10px 10px 0;
     vertical-align: top;
     border-radius: 5px;
-    padding: 15px 10px;
+    box-sizing: border-box;
+}
+.card:hover{
+    border: 2px solid #66b1ff;
+    margin-bottom: 6px;
 }
 .card-image{
-    line-height: 200px;
-    max-width: 100%;
-    max-height: 200px;
+    line-height: 170px;
+    max-height: 170px;
+    width: 100%;
 }
 .card-preview{
     padding: 20px 0;
@@ -173,15 +181,6 @@ export default {
 .card-footer{
     color: #ccc;
     font-size: 12px;
-    margin-top: 10px;
-}
-.text-cut-name{
-    display: -webkit-box;
-    word-wrap:break-word;
-    word-break:break-all;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-align: right;
+    padding: 15px 10px;
 }
 </style>
