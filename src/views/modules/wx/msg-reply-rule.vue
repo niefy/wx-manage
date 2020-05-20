@@ -100,9 +100,7 @@ export default {
                 params: this.$http.adornParams({
                     'page': this.pageIndex,
                     'limit': this.pageSize,
-                    'matchValue': this.dataForm.matchValue,
-                    'sidx': 'rule_id',
-                    'order': 'desc'
+                    'matchValue': this.dataForm.matchValue
                 })
             }).then(({ data }) => {
                 if (data && data.code === 200) {

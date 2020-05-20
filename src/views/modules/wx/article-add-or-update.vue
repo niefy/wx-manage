@@ -95,16 +95,24 @@ export default {
         }
     },
     methods: {
-        init(article) {
-            this.visible = true
-            if(article && article.id){
-                this.dataForm = article;
-                this.dataForm.type = article.type + "";
-            }else{
-                this.$nextTick(() => {
-                    this.$refs["dataForm"].resetFields()
-                })
-            }
+        init(id) {
+            this.dataForm.id = id || "";
+            this.visible=true
+            this.$nextTick(() => {
+                this.$refs["dataForm"].resetFields();
+                if (id > 0) {
+                    this.$http({
+                        url: this.$http.adornUrl(`/manage/article/info/${this.dataForm.id}`),
+                        method: "get",
+                        params: this.$http.adornParams()
+                    }).then(({ data }) => {
+                        if (data && data.code === 200) {
+                            this.dataForm=data.article;
+                            this.dataForm.type = data.article.type + "";
+                        }
+                    });
+                }
+            });
         },
         // 表单提交
         dataFormSubmit() {

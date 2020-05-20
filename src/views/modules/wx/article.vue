@@ -31,7 +31,7 @@
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
                 <template slot-scope="scope">
-                    <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row)">修改</el-button>
+                    <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
@@ -116,10 +116,10 @@ export default {
             this.dataListSelections = val
         },
         // 新增 / 修改
-        addOrUpdateHandle(article) {
+        addOrUpdateHandle(id) {
             this.addOrUpdateVisible = true
             this.$nextTick(() => {
-                this.$refs.addOrUpdate.init(article || '')
+                this.$refs.addOrUpdate.init(id)
             })
         },
         // 删除

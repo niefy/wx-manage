@@ -19,6 +19,9 @@ Vue.config.productionTip = false
 Vue.prototype.$http = httpRequest // ajax请求方法
 Vue.prototype.isAuth = isAuth     // 权限方法
 
+moment.locale('zh-cn');
+Vue.prototype.$moment = moment; //时间处理
+
 new Vue({
     router,
     store,

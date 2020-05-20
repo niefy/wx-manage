@@ -18,7 +18,7 @@
                 <div class="menu-input">
                     <select v-model="button.type" name="type" class="menu-input-text">
                         <option value="view">跳转网页(view)</option>
-                        <option value="mediaId">发送消息(mediaId)</option>
+                        <option value="media_id">发送消息(media_id)</option>
                         <!--<option value="view_limited">跳转公众号图文消息链接(view_limited)</option>-->
                         <option value="miniprogram">打开指定小程序(miniprogram)</option>
                         <option value="click">自定义点击事件(click)</option>
@@ -40,12 +40,12 @@
                     </div>
                 </div>
             </div>
-            <div class="menu-content" v-else-if="button.type=='mediaId'">
+            <div class="menu-content" v-else-if="button.type=='media_id'">
                 <div class="menu-input-group">
                     <p class="menu-tips">订阅者点击该菜单会收到以下图文消息</p>
                     <div class="menu-label">media_id</div>
                     <div class="menu-input">
-                        <input type="text" placeholder="图文消息mediaId" class="menu-input-text" v-model="button.mediaId">
+                        <input type="text" placeholder="图文消息media_id" class="menu-input-text" v-model="button.media_id">
                     </div>
                 </div>
             </div>
