@@ -28,8 +28,8 @@ npm run build
 ## [生产环境部署步骤](https://github.com/niefy/wx-manage/wiki/生产环境部署文档)
 
 ## 技术选型：
-- 核心框架：Spring Boot 2.1
-- 安全框架：Apache Shiro 1.4
+- 核心框架：Spring Boot
+- 安全框架：Apache Shiro
 - 持久层框架：MyBatis-Plus
 - 公众号开发框架：[WxJava](https://github.com/Wechat-Group/WxJava)
 - 后端脚手架：[renren-fast](https://gitee.com/renrenio/renren-fast)
