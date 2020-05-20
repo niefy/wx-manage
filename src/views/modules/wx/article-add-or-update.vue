@@ -36,7 +36,7 @@
             <el-form-item label="标签" prop="tags">
                 <tags-editor v-model="dataForm.tags"></tags-editor>
             </el-form-item>
-            <el-form-item label="文章首图" prop="image">
+            <el-form-item label="封面图" prop="image">
                 <el-input v-model="dataForm.image" placeholder="图片链接">
                     <OssUploader slot="append" @uploaded="dataForm.image=$event"></OssUploader>
                 </el-input>
