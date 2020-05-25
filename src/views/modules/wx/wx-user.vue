@@ -43,6 +43,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="subscribeTime" header-align="center" align="center" label="订阅时间">
+                <template slot-scope="scope">{{$moment(scope.row.subscribeTime).calendar()}}</template>
             </el-table-column>
             <el-table-column prop="subscribe" header-align="center" align="center" label="是否关注">
                 <span slot-scope="scope">{{scope.row.subscribe?"是":"否"}}</span>

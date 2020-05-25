@@ -185,7 +185,8 @@ export default {
                 let demo = { head_content: "开头文字", list: [{ id: "菜单1ID", content: "菜单2内容" }, { id: "菜单2ID", content: "菜单2内容" }, { id: "菜单nID", content: "菜单n内容" }], tail_content: "结尾文字" }
                 this.dataForm.replyContent = JSON.stringify(demo, null, 4)
             } else if ("news" == value) {
-                this.dataForm.replyContent = '文章ID'
+                let demo={title:"文章标题",description:"文章简介",url:"链接URL",picUrl:"缩略图URL"}
+                this.dataForm.replyContent = JSON.stringify(demo, null, 4)
             } else {
                 this.dataForm.replyContent = '媒体素材media_id'
             }

@@ -1,6 +1,6 @@
 <template>
     <div class="mod-home">
-        <h3>欢迎使用微信CMS管理系统</h3>
+        <h3>欢迎使用微信管理系统</h3>
     </div>
 </template>
 

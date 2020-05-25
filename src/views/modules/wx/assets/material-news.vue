@@ -1,36 +1,38 @@
 <template>
     <div class="panel">
-        <el-form :inline="true" :model="dataForm">
-            <el-form-item>
-                <el-button size="mini" v-if="isAuth('wx:wxassets:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-            </el-form-item>
-        </el-form>
-        <div  class="flex justify-start" v-loading="dataListLoading">
-            <div v-for="n in rows" :key="n">
-                <template v-for="(item,i) in dataList">
-                    <div class="card"  :key="item.mediaId" v-if="i%rows==n-1" @click="onSelect(item)">
-                        <div class="card-preview">
-                            <a v-for="(article,k) in item.content.articles" :key="k" :href="article.url" class="article-item" target="_blank">
-                                <div class="article-title">{{article.title}}</div>
-                                <el-image class="article-thumb" :src="article.thumbUrl"></el-image>
-                            </a>
-                        </div>
-                        <div class="card-footer">
-                            <div>{{item.updateTime}}</div>
-                            <div class="flex justify-between align-center" v-if="!selectMode">
-                                <el-button size="mini" type="text" icon="el-icon-copy-document" v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
-                                <el-button size="mini" type="text" icon="el-icon-edit" @click="addOrUpdateHandle(item)">编辑</el-button>
-                                <el-button size="mini" type="text" icon="el-icon-delete" @click="deleteHandle(item.mediaId)">删除</el-button>
+        <div v-show="!addOrUpdateVisible">
+            <el-form :inline="true" :model="dataForm">
+                <el-form-item>
+                    <el-button size="mini" v-if="isAuth('wx:wxassets:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+                </el-form-item>
+            </el-form>
+            <div  class="flex justify-start" v-loading="dataListLoading">
+                <div v-for="n in rows" :key="n">
+                    <template v-for="(item,i) in dataList">
+                        <div class="card"  :key="item.mediaId" v-if="i%rows==n-1" @click="onSelect(item)">
+                            <div class="card-preview">
+                                <a v-for="(article,k) in item.content.articles" :key="k" :href="article.url" class="article-item" target="_blank">
+                                    <div class="article-title">{{article.title}}</div>
+                                    <el-image class="article-thumb" :src="article.thumbUrl"></el-image>
+                                </a>
+                            </div>
+                            <div class="card-footer">
+                                <div>{{$moment(item.updateTime).calendar()}}</div>
+                                <div class="flex justify-between align-center" v-if="!selectMode">
+                                    <el-button size="mini" type="text" icon="el-icon-copy-document" v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
+                                    <el-button size="mini" type="text" icon="el-icon-edit" @click="addOrUpdateHandle(item)">编辑</el-button>
+                                    <el-button size="mini" type="text" icon="el-icon-delete" @click="deleteHandle(item.mediaId)">删除</el-button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                </div>
             </div>
+            <el-pagination @current-change="currentChangeHandle" :current-page="pageIndex" :page-size="pageSize" :total="totalCount" layout="total, prev,pager, next, jumper">
+            </el-pagination>
         </div>
-        <el-pagination @current-change="currentChangeHandle" :current-page="pageIndex" :page-size="pageSize" :total="totalCount" layout="total, prev,pager, next, jumper">
-        </el-pagination>
-        <!-- 弹窗, 新增 / 修改 -->
-        <add-or-update v-show="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="onChange"></add-or-update>
+        <!-- 新增 / 修改 -->
+        <add-or-update :visible="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="onChange" @hide="addOrUpdateVisible=false"></add-or-update>
     </div>
 </template>
 <script>

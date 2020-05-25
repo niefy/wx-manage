@@ -30,9 +30,4 @@ img.image-sm {
 .text-warning {
     color: #e6a23c;
 }
-
-/* 解决el-dialog中tinymceditor的弹出层被遮挡的问题 */
-.tox-silver-sink{
-    z-index: 2001 !important;
-}
 </style>
