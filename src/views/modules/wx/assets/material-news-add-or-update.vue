@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="!mediaId ? '新增素材' : '修改素材'" :close-on-click-modal="false" :visible.sync="visible" width="85%" top="0">
+    <div  v-show="visible">
         <div class="flex">
             <div class="card-list">
                 <div class="text-center margin-bottom">图文列表</div>
@@ -51,11 +51,11 @@
             </el-form>
         </div>
         <div class="dialog-footer">
-            <el-button @click="visible = false">取消</el-button>
+            <el-button @click="$emit('hide')">取消</el-button>
             <el-button type="primary" @click="dataFormSubmit()" :disabled="uploading">{{this.mediaId?'修改此篇':'全部提交（共'+articles.length+'篇）'}}</el-button>
         </div>
         <assets-selector v-if="assetsSelectorVisible" :visible="assetsSelectorVisible" selectType="image" @selected="onAssetsSelect"></assets-selector>
-    </el-dialog>
+    </div>
 </template>
 
 <script>
@@ -76,9 +76,14 @@ export default {
         TinymceEditor: () => import('@/components/tinymce-editor'),
         AssetsSelector:()=>import('./assets-selector')
     },
+    props:{
+        visible:{
+            type:Boolean,
+            default:false
+        }
+    },
     data() {
         return {
-            visible: false,
             assetsSelectorVisible:false,
             mediaId:'',
             selectedIndex:0,
@@ -109,7 +114,6 @@ export default {
                 this.mediaId=''
                 this.articles=[{...articleTemplate}]
             }
-            this.visible=true
         },
         // 表单提交
         dataFormSubmit() {
@@ -137,8 +141,8 @@ export default {
                         type: "success",
                         duration: 1500,
                         onClose: () => {
-                            this.visible = false;
                             this.$emit("refreshDataList");
+                            this.emit('hide')
                         }
                     });
                 } else {

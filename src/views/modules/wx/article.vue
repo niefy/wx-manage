@@ -1,45 +1,49 @@
 <template>
-    <div class="mod-config">
-        <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
-            <el-form-item>
-                <el-select v-model="dataForm.type" placeholder="选择文章类型">
-                    <el-option v-for="(name,key) in ARTICLE_TYPES" :key="name" :label="name" :value="key" allow-create></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item>
-                <el-input v-model="dataForm.title" placeholder="标题" clearable></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button @click="pageIndex=1;getDataList()">查询</el-button>
-                <el-button v-if="isAuth('wx:article:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-                <el-button v-if="isAuth('wx:article:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
-            </el-form-item>
-        </el-form>
-        <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
-            <el-table-column type="selection" header-align="center" align="center" width="50">
-            </el-table-column>
-            <el-table-column prop="id" header-align="center" align="center" label="ID">
-            </el-table-column>
-            <el-table-column prop="type" header-align="center" align="center" label="文章类型" :formatter="articleTypeFormat">
-            </el-table-column>
-            <el-table-column prop="title" header-align="center" align="center" show-overflow-tooltip label="标题">
-                <a :href="scope.row.targetLink" slot-scope="scope">{{scope.row.title}}</a>
-            </el-table-column>
-            <el-table-column prop="category" header-align="center" align="center" label="一级分类">
-            </el-table-column>
-            <el-table-column prop="subCategory" header-align="center" align="center" label="二级分类">
-            </el-table-column>
-            <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
-                <template slot-scope="scope">
-                    <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
-                    <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-        <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalCount" layout="total, sizes, prev, pager, next, jumper">
-        </el-pagination>
-        <!-- 弹窗, 新增 / 修改  -->
-        <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <div>
+        <div v-show="!addOrUpdateVisible">
+            <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+                <el-form-item>
+                    <el-select v-model="dataForm.type" placeholder="选择文章类型">
+                        <el-option v-for="(name,key) in ARTICLE_TYPES" :key="key" :label="name" :value="key" allow-create></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-input v-model="dataForm.title" placeholder="标题" clearable></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button @click="pageIndex=1;getDataList()">查询</el-button>
+                    <el-button v-if="isAuth('wx:article:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+                    <el-button v-if="isAuth('wx:article:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+                </el-form-item>
+            </el-form>
+            <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
+                <el-table-column type="selection" header-align="center" align="center" width="50">
+                </el-table-column>
+                <el-table-column prop="id" header-align="center" align="center" label="ID">
+                </el-table-column>
+                <el-table-column prop="type" header-align="center" align="center" :formatter="articleTypeFormat" label="文章类型">
+                </el-table-column>
+                <el-table-column prop="title" header-align="center" align="center" show-overflow-tooltip label="标题">
+                    <a :href="scope.row.targetLink" slot-scope="scope">{{scope.row.title}}</a>
+                </el-table-column>
+                <el-table-column prop="category" header-align="center" align="center" label="一级分类">
+                </el-table-column>
+                <el-table-column prop="subCategory" header-align="center" align="center" label="二级分类">
+                </el-table-column>
+                <el-table-column prop="openCount" header-align="center" align="center" label="打开次数">
+                </el-table-column>
+                <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
+                        <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalCount" layout="total, sizes, prev, pager, next, jumper">
+            </el-pagination>
+        </div>
+         <!-- 新增 / 修改  -->
+        <add-or-update :visible="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList" @hide="addOrUpdateVisible=false"></add-or-update>
     </div>
 </template>
 

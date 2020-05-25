@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="dataForm.id ? '修改' : '新增'" :close-on-click-modal="false" :visible.sync="visible" width="85%" top="0">
+    <div v-show="visible">
         <el-form :model="dataForm" :rules="dataRule" ref="dataForm" size="mini" label-width="80px">
             <el-row>
                 <el-col :span="12">
@@ -43,11 +43,11 @@
             </el-form-item>
             <tinymce-editor ref="editor" v-model="dataForm.content"></tinymce-editor>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="visible = false">取消</el-button>
+        <div class="margin-top text-right">
+            <el-button @click="$emit('hide')">取消</el-button>
             <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
         </div>
-    </el-dialog>
+    </div>
 </template>
 
 <script>
@@ -58,9 +58,14 @@ export default {
         tagsEditor: () => import("@/components/tags-editor"),
         OssUploader: () => import('../oss/oss-uploader')
     },
+    props:{
+        visible:{
+            type:Boolean,
+            default:false
+        }
+    },
     data() {
         return {
-            visible: false,
             dataForm: {
                 id: "",
                 type: '1',
@@ -97,7 +102,6 @@ export default {
     methods: {
         init(id) {
             this.dataForm.id = id || "";
-            this.visible=true
             this.$nextTick(() => {
                 this.$refs["dataForm"].resetFields();
                 if (id > 0) {
@@ -129,8 +133,8 @@ export default {
                                 type: "success",
                                 duration: 1500,
                                 onClose: () => {
-                                    this.visible = false;
                                     this.$emit("refreshDataList");
+                                    this.$emit('hide')
                                 }
                             });
                         } else {

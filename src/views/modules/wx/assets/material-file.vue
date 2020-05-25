@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="text-cut-name">{{item.name}}</div>
-                    <div class="text-right">{{item.updateTime}}</div>
+                    <div>{{$moment(item.updateTime).calendar()}}</div>
                     <div class="flex justify-between align-center">
                         <el-button size="mini" type="text" icon="el-icon-copy-document"  v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
                         <el-button size="mini" type="text" icon="el-icon-delete"  @click="deleteHandle(item.mediaId)" >删除</el-button>
