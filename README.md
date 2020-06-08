@@ -1,10 +1,12 @@
 # wx-manage
 微信公众号后台[wx-api](https://github.com/niefy/wx-api)项目管理系统界面，提供公众号菜单、自动回复、公众号素材、简易CMS、等管理功能，请注意本项目仅为管理后台界面，需配合后端程序[wx-api](https://github.com/niefy/wx-api)一起使用
 
-### [☁项目后端](https://github.com/niefy/wx-api) | [📖项目文档](https://www.yuque.com/nifury/wx) | [📊功能投票](https://wj.qq.com/s2/5896407/a381) | [🕓版本更新记录](https://www.yuque.com/nifury/wx/gd11wb) | [Github仓库](https://github.com/niefy/wx-manage) | [码云仓库](https://gitee.com/niefy/wx-manage)
+### [📖项目文档](https://www.yuque.com/nifury/wx) | [📊功能投票](https://wj.qq.com/s2/5896407/a381) | [🕓版本更新记录](https://www.yuque.com/nifury/wx/gd11wb) | [Github仓库](https://github.com/niefy/wx-manage) | [码云仓库](https://gitee.com/niefy/wx-manage)
 
-## 开发环境
-- node.js
+## 项目说明
+- wx-api是一个轻量级的公众号开发种子项目，可快速接入微信公众号管理功能
+- 管理后台前端项目wx-manage：https://github.com/niefy/wx-manage
+- 移动端示例wx-client: https://github.com/niefy/wx-client
 
 ## [开发环境启动文档](https://www.yuque.com/nifury/wx/guobb7)
 ## [生产环境部署步骤](https://www.yuque.com/nifury/wx/ofehhv)
