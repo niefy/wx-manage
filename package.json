@@ -7,18 +7,18 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@tinymce/tinymce-vue": "^3.2.1",
+    "@tinymce/tinymce-vue": "^3.2.2",
     "axios": "^0.19.0",
     "vue": "^2.6.10",
     "vue-clipboard2": "^0.3.1",
     "vue-cookie": "^1.1.4",
-    "vue-router": "^3.2.0",
+    "vue-router": "^3.3.2",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@vue/cli-plugin-babel": "^4.3.1",
-    "@vue/cli-service": "^4.3.1",
+    "@vue/cli-plugin-babel": "^4.4.1",
+    "@vue/cli-service": "^4.4.1",
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
