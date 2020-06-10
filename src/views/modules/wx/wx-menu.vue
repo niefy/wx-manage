@@ -142,6 +142,10 @@ export default {
             this.onDragOverMenu='';
             if(i==this.selectedMenuIndex && i2==this.selectedSubMenuIndex) //拖拽到了原位置
                 return 
+            if(this.menu.buttons[i].subButtons.length>=5){
+                this.$message.error('目标组已满');
+                return
+            }
             this.menu.buttons[i].subButtons.splice(i2,0,this.selectedButton)
             let delSubIndex = this.selectedSubMenuIndex
             if(i==this.selectedMenuIndex && i2<this.selectedSubMenuIndex) 
