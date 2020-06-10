@@ -12,7 +12,7 @@
                 <p class="menu-tips">字数不超过{{selectedMenuLevel==1?'5':'8'}}个汉字</p>
             </div>
         </div>
-        <block v-show="!button.subButtons || button.subButtons.length==0">
+        <template v-show="!button.subButtons || button.subButtons.length==0">
             <div class="menu-input-group">
                 <div class="menu-label">菜单内容</div>
                 <div class="menu-input">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-        </block>
+        </template>
     </div>
 </template>
 <script>

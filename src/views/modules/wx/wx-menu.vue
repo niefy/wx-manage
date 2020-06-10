@@ -4,18 +4,19 @@
             <!-- 预览窗 -->
             <div class="weixin-preview">
                 <div class="weixin-bd">
+                    <div class="weixin-header">公众号菜单</div>
                     <ul class="weixin-menu" id="weixin-menu">
-                        <li v-for="(btn,i) in menu.buttons" :key="i" class="menu-item" :class="{current:selectedMenuIndex===i&&selectedMenuLevel==1}" @click="selectMenu(i)">
+                        <li v-for="(btn,i) in menu.buttons" :key="i" class="menu-item" :class="{'current':selectedMenuIndex===i&&selectedMenuLevel==1}" @click="selectMenu(i)">
                             <div class="menu-item-title">
                                 <span>{{ btn.name }}</span>
                             </div>
-                            <ul class="weixin-sub-menu" v-show="selectedMenuIndex===i">
-                                <li v-for="(sub,i2) in btn.subButtons" :key="i2" class="menu-sub-item" :class="{current:selectedSubMenuIndex===i2&&selectedMenuLevel==2}" @click.stop="selectSubMenu(i2)">
+                            <ul class="weixin-sub-menu">
+                                <li v-for="(sub,i2) in btn.subButtons" :key="i2" class="menu-sub-item" :class="{'current':selectedMenuIndex===i&&selectedSubMenuIndex===i2&&selectedMenuLevel==2,'on-drag-over':onDragOverMenu==(i+'_'+i2)}" @click.stop="selectSubMenu(i,i2)"  draggable="true"  @dragstart="selectSubMenu(i,i2)" @dragover.prevent="onDragOverMenu=(i+'_'+i2)" @drop="onDrop(i,i2)">
                                     <div class="menu-item-title">
                                         <span>{{sub.name}}</span>
                                     </div>
                                 </li>
-                                <li v-if="btn.subButtons.length<5" class="menu-sub-item" @click.stop="addMenu(2)">
+                                <li v-if="btn.subButtons.length<5" class="menu-sub-item" :class="{'on-drag-over':onDragOverMenu==(i+'_'+btn.subButtons.length)}" @click.stop="addMenu(2,i)" @dragover.prevent="onDragOverMenu=(i+'_'+btn.subButtons.length)" @drop="onDrop(i,btn.subButtons.length)">
                                     <div class="menu-item-title">
                                         <i class="el-icon-plus"></i>
                                     </div>
@@ -33,7 +34,7 @@
                 <wx-menu-button-editor :button="selectedButton" :selectedMenuLevel="selectedMenuLevel" @delMenu="delMenu"></wx-menu-button-editor>
             </div>
         </div>
-        <div class="weixin-btn-group" v-if="isAuth('wx:menu:save')" @click="updateWxMenu">
+        <div class="weixin-btn-group" v-if="isAuth('weixin:menu:save')" @click="updateWxMenu">
             <el-button type="success" icon="el-icon-upload">发布</el-button>
             <el-button type="warning" icon="el-icon-delete" @click="delMenu">清空</el-button>
         </div>
@@ -50,7 +51,8 @@ export default {
             selectedMenuIndex: '',//当前选中菜单索引
             selectedSubMenuIndex: '',//当前选中子菜单索引
             selectedMenuLevel: 0,//选中菜单级别
-            selectedButton: ''//选中的菜单按钮
+            selectedButton: '',//选中的菜单按钮
+            onDragOverMenu:'' //当前鼠标拖动到的位置
         }
     },
     mounted() {
@@ -80,13 +82,14 @@ export default {
             this.selectedButton = this.menu.buttons[i]
         },
         //选中子菜单
-        selectSubMenu(i) {
+        selectSubMenu(i,i2) {
             this.selectedMenuLevel = 2
-            this.selectedSubMenuIndex = i
-            this.selectedButton = this.menu.buttons[this.selectedMenuIndex].subButtons[i]
+            this.selectedMenuIndex = i
+            this.selectedSubMenuIndex = i2
+            this.selectedButton = this.menu.buttons[i].subButtons[i2]
         },
         //添加菜单
-        addMenu(level) {
+        addMenu(level,i) {
             if (level == 1 && this.menu.buttons.length < 3) {
                 this.menu.buttons.push({
                     "type": "view",
@@ -96,30 +99,30 @@ export default {
                 })
                 this.selectMenu(this.menu.buttons.length - 1)
             }
-            if (level == 2 && this.menu.buttons[this.selectedMenuIndex].subButtons.length < 5) {
-                this.menu.buttons[this.selectedMenuIndex].subButtons.push({
+            if (level == 2 && this.menu.buttons[i].subButtons.length < 5) {
+                this.menu.buttons[i].subButtons.push({
                     "type": "view",
                     "name": "子菜单名称",
                     "url": ""
                 })
-                this.selectSubMenu(this.menu.buttons[this.selectedMenuIndex].subButtons.length - 1)
+                this.selectSubMenu(i,this.menu.buttons[i].subButtons.length - 1)
             }
         },
         //删除菜单
         delMenu() {
             if (this.selectedMenuLevel == 1 && confirm('删除后菜单下设置的内容将被删除')) {
                 this.menu.buttons.splice(this.selectedMenuIndex, 1);
-                this.selectedMenuLevel = 0//删除主菜单后不选中任何菜单
-                this.selectedMenuIndex = ''
-                this.selectedSubMenuIndex = ''
-                this.selectedButton = ''
+                this.unSelectMenu()
             } else if (this.selectedMenuLevel == 2) {
                 this.menu.buttons[this.selectedMenuIndex].subButtons.splice(this.selectedSubMenuIndex, 1);
-
-                this.selectedMenuLevel = 1//删除后选中主菜单不选子菜单
-                this.selectedSubMenuIndex = '';
-                this.selectedButton = this.menu.buttons[this.selectedMenuIndex]
+                this.unSelectMenu()
             }
+        },
+        unSelectMenu(){//不选中任何菜单
+            this.selectedMenuLevel = 0
+            this.selectedMenuIndex = ''
+            this.selectedSubMenuIndex = ''
+            this.selectedButton = ''
         },
         updateWxMenu() {
             this.$http({
@@ -134,23 +137,19 @@ export default {
                 }
 
             });
+        },
+        onDrop(i,i2){//拖拽移动位置
+            this.onDragOverMenu='';
+            if(i==this.selectedMenuIndex && i2==this.selectedSubMenuIndex) //拖拽到了原位置
+                return 
+            this.menu.buttons[i].subButtons.splice(i2,0,this.selectedButton)
+            let delSubIndex = this.selectedSubMenuIndex
+            if(i==this.selectedMenuIndex && i2<this.selectedSubMenuIndex) 
+                delSubIndex++
+            this.menu.buttons[this.selectedMenuIndex].subButtons.splice(delSubIndex, 1);
+            this.unSelectMenu()
         }
     }
-
 }
 </script>
-<style src="@/assets/css/wx-menu.css"></style
-<style scoped>
-@import '@/assets/css/wx-menu.css';
-.form_contianer {
-    padding: 25px;
-    border-radius: 5px;
-    text-align: center;
-    background-color: #fff;
-}
-
-.form_contianer .submit_btn {
-    width: 100%;
-    font-size: 16px;
-}
-</style>
+<style src="@/assets/css/wx-menu.css"></style>
