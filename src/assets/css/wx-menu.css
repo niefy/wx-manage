@@ -40,8 +40,11 @@
     left: 0px;
 }
 
-.weixin-preview .weixin-bd {
-
+.weixin-preview .weixin-header{
+    text-align: center;
+    padding: 10px 0;
+    background-color: #616161;
+    color: #ffffff;   
 }
 
 .weixin-preview .weixin-menu {
@@ -91,6 +94,10 @@
     cursor: pointer;
     position: relative;
     color: #616161;
+}
+
+.weixin-preview .weixin-sub-menu .menu-sub-item.on-drag-over{
+    border-top: 2px solid #44b549;
 }
 
 .weixin-preview .menu-arrow {
