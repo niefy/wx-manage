@@ -34,7 +34,7 @@
                 <wx-menu-button-editor :button="selectedButton" :selectedMenuLevel="selectedMenuLevel" @delMenu="delMenu"></wx-menu-button-editor>
             </div>
         </div>
-        <div class="weixin-btn-group" v-if="isAuth('weixin:menu:save')" @click="updateWxMenu">
+        <div class="weixin-btn-group" v-if="isAuth('wx:menu:save')" @click="updateWxMenu">
             <el-button type="success" icon="el-icon-upload">发布</el-button>
             <el-button type="warning" icon="el-icon-delete" @click="delMenu">清空</el-button>
         </div>
