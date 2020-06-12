@@ -12,7 +12,7 @@
                 <p class="menu-tips">字数不超过{{selectedMenuLevel==1?'5':'8'}}个汉字</p>
             </div>
         </div>
-        <template v-show="!button.subButtons || button.subButtons.length==0">
+        <div v-show="!button.subButtons || button.subButtons.length==0">
             <div class="menu-input-group">
                 <div class="menu-label">菜单内容</div>
                 <div class="menu-input">
@@ -45,7 +45,7 @@
                     <p class="menu-tips">订阅者点击该菜单会收到以下图文消息</p>
                     <div class="menu-label">media_id</div>
                     <div class="menu-input">
-                        <input type="text" placeholder="图文消息media_id" class="menu-input-text" v-model="button.media_id">
+                        <input type="text" placeholder="图文消息media_id" class="menu-input-text" v-model="button.mediaId">
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-        </template>
+        </div>
     </div>
 </template>
 <script>
