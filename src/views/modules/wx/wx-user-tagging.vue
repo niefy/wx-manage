@@ -13,6 +13,7 @@
     </el-dialog>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
     name:'wx-user-tagging',
     props:{
@@ -30,10 +31,8 @@ export default {
             submitting:false
         }
     },
-    computed: {
-        wxUserTags() {
-            return this.$store.state.wxUserTags.tags
-        },
+    computed: mapState({
+        wxUserTags:state=>state.wxUserTags.tags,
         /**
          * 返回下拉选择框中的选项列表
          * 假设 all= 全部标签，intersection = 用户标签交集（即所有用户都有的） ，union=用户标签并集（即至少一个用户的）
@@ -55,7 +54,7 @@ export default {
             return []
         }
         
-    },
+    }),
     methods:{
         init(mode){
             if('tagging'==mode || 'untagging'==mode){

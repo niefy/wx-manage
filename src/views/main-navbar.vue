@@ -18,6 +18,11 @@
                         <i class="el-icon-setting"></i>
                     </template>
                 </el-menu-item>
+                <el-menu-item index="2" v-if="isAuth('wx:wxaccount:list')">
+                    <template slot="title">
+                        <wx-account-selector></wx-account-selector>
+                    </template>
+                </el-menu-item>
                 <el-menu-item class="site-navbar__avatar" index="3">
                     <el-dropdown :show-timeout="0" placement="bottom">
                         <span class="el-dropdown-link">
@@ -38,6 +43,7 @@
 
 <script>
 import UpdatePassword from './main-navbar-update-password'
+import WxAccountSelector from '@/components/wx-account-selector'
 import { clearLoginInfo } from '@/utils'
 export default {
     data() {
@@ -46,7 +52,7 @@ export default {
         }
     },
     components: {
-        UpdatePassword
+        UpdatePassword,WxAccountSelector
     },
     computed: {
         navbarLayoutType: {

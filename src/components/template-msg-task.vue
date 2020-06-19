@@ -44,6 +44,7 @@
     </el-dialog>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
     name:'template-msg-task',
     props:{
@@ -73,10 +74,8 @@ export default {
             totalCount:0
         }
     },
-    computed: {
-        wxUserTags() {
-            return this.$store.state.wxUserTags.tags
-        },
+    computed: mapState({
+        wxUserTags:state=>state.wxUserTags.tags,
         msgReview(){
             if(!this.msgTemplate.data) return ""
             let content = this.msgTemplate.content
@@ -85,7 +84,7 @@ export default {
             })
             return content
         }
-    },
+    }),
     mounted() {
         this.getWxUserTags().then((taglist)=>{
             if(this.wxUserTagName){

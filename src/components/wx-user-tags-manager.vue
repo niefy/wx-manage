@@ -14,6 +14,7 @@
     </el-dialog>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
     name: 'wx-user-tags-manager',
     props: {
@@ -30,11 +31,9 @@ export default {
             submitting:false,
         }
     },
-    computed: {
-        wxUserTags() {
-            return this.$store.state.wxUserTags.tags
-        }
-    },
+    computed: mapState({
+        wxUserTags:state=>state.wxUserTags.tags
+    }),
     mounted() {
         this.getWxUserTags();
     },

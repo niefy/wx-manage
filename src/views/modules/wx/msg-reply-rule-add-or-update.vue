@@ -1,10 +1,19 @@
 <template>
     <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
         <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="80px">
+            <el-form-item label="规则名称" prop="ruleName">
+                <el-input v-model="dataForm.ruleName" placeholder="规则名称"></el-input>
+            </el-form-item>
+            <el-form-item label="匹配词" prop="matchValue">
+                <tags-editor v-model="dataForm.matchValue"></tags-editor>
+            </el-form-item>
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="规则名称" prop="ruleName">
-                        <el-input v-model="dataForm.ruleName" placeholder="规则名称"></el-input>
+                    <el-form-item label="作用范围" prop="appid">
+                        <el-select v-model="dataForm.appid" placeholder="作用范围">
+                            <el-option label="全部公众号" value=""></el-option>
+                            <el-option label="当前公众号" :value="selectedAppid"></el-option>
+                        </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
@@ -13,9 +22,6 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-form-item label="匹配词" prop="matchValue">
-                <tags-editor v-model="dataForm.matchValue"></tags-editor>
-            </el-form-item>
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="回复类型" prop="replyType">
@@ -62,6 +68,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     components: {
         tagsEditor: () => import('@/components/tags-editor'),
@@ -73,6 +80,7 @@ export default {
             assetsSelectorVisible:false,
             dataForm: {
                 ruleId: 0,
+                appid:'',
                 ruleName: "",
                 exactMatch: false,
                 matchValue: "",
@@ -108,12 +116,9 @@ export default {
             }
         };
     },
-    computed: {
-        KefuMsgType: {
-            get() {
-                return this.$store.state.message.KefuMsgType
-            }
-        },
+    computed: mapState({
+        KefuMsgType: state=>state.message.KefuMsgType,
+        selectedAppid:state=>state.wxAccount.selectedAppid,
         assetsType(){
             const config={//消息类型与选择素材类型对应关系
                 'image':'image',
@@ -125,7 +130,7 @@ export default {
             }
             return config[this.dataForm.replyType] || ''
         }
-    },
+    }),
     methods: {
         init(id) {
             this.dataForm.ruleId = id || 0;

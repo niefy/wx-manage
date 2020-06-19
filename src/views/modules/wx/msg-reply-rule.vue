@@ -14,8 +14,8 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
-                        <el-form-item label="ID">
-                            <span>{{ props.row.ruleId }}</span>
+                        <el-form-item label="作用范围">
+                            <span>{{ props.row.appid?'当前公众号':'全部公众号' }}</span>
                         </el-form-item>
                         <el-form-item label="精确匹配">
                             <span>{{ props.row.exactMatch?'是':'否' }}</span>
@@ -61,6 +61,7 @@
 
 <script>
 import AddOrUpdate from './msg-reply-rule-add-or-update'
+import { mapState } from 'vuex'
 export default {
     components: {
         AddOrUpdate
@@ -79,13 +80,9 @@ export default {
             addOrUpdateVisible: false
         }
     },
-    computed: {
-        KefuMsgType: {
-            get() {
-                return this.$store.state.message.KefuMsgType
-            }
-        }
-    },
+    computed: mapState({
+        KefuMsgType: state=>state.message.KefuMsgType
+    }),
 
     activated() {
         this.getDataList()

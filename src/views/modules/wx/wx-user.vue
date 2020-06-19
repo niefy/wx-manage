@@ -64,6 +64,7 @@
 <script>
 import WxUserTagsManager from '@/components/wx-user-tags-manager'
 import WxUserTagging from './wx-user-tagging'
+import { mapState } from 'vuex'
 export default {
     data() {
         return {
@@ -86,11 +87,9 @@ export default {
     activated() {
         this.getDataList()
     },
-    computed: {
-        wxUserTags() {
-            return this.$store.state.wxUserTags.tags
-        }
-    },
+    computed: mapState({
+        wxUserTags:state=>state.wxUserTags.tags
+    }),
     methods: {
         // 获取数据列表
         getDataList() {
