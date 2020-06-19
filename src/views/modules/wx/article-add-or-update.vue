@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     name:'article-add-or-update',
     components: {
@@ -92,13 +93,9 @@ export default {
             }
         };
     },
-    computed: {
-        ARTICLE_TYPES: {
-            get() {
-                return this.$store.state.article.ARTICLE_TYPES;
-            }
-        }
-    },
+    computed: mapState({
+        ARTICLE_TYPES: state=>state.article.ARTICLE_TYPES
+    }),
     methods: {
         init(id) {
             this.dataForm.id = id || "";

@@ -23,18 +23,15 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
     name:'wx-msg-preview',
     props:{
         msg:Object
     },
-    computed:{
-        XmlMsgType: {
-            get() {
-                return this.$store.state.message.XmlMsgType
-            }
-        },
-    }
+    computed:mapState({
+        XmlMsgType:state=>state.message.XmlMsgType,
+    })
 }
 </script>
 <style scoped>

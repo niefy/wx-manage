@@ -49,6 +49,7 @@
 
 <script>
 import AddOrUpdate from './article-add-or-update'
+import { mapState } from 'vuex'
 export default {
     components: {
         AddOrUpdate
@@ -68,13 +69,9 @@ export default {
             addOrUpdateVisible: false
         }
     },
-    computed: {
-        ARTICLE_TYPES: {
-            get() {
-                return this.$store.state.article.ARTICLE_TYPES
-            }
-        }
-    },
+    computed: mapState({
+        ARTICLE_TYPES: state=>state.article.ARTICLE_TYPES
+    }),
     mounted() {
         this.getDataList()
     },

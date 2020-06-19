@@ -755,3 +755,93 @@
 .text-right {
 	text-align: right;
 }
+
+.text-red,
+.line-red,
+.lines-red {
+	color: #e54d42;
+}
+
+.text-orange,
+.line-orange,
+.lines-orange {
+	color: #f37b1d;
+}
+
+.text-yellow,
+.line-yellow,
+.lines-yellow {
+	color: #fbbd08;
+}
+
+.text-olive,
+.line-olive,
+.lines-olive {
+	color: #8dc63f;
+}
+
+.text-green,
+.line-green,
+.lines-green {
+	color: #39b54a;
+}
+
+.text-cyan,
+.line-cyan,
+.lines-cyan {
+	color: #1cbbb4;
+}
+
+.text-blue,
+.line-blue,
+.lines-blue {
+	color: #0081ff;
+}
+
+.text-purple,
+.line-purple,
+.lines-purple {
+	color: #6739b6;
+}
+
+.text-mauve,
+.line-mauve,
+.lines-mauve {
+	color: #9c26b0;
+}
+
+.text-pink,
+.line-pink,
+.lines-pink {
+	color: #e03997;
+}
+
+.text-brown,
+.line-brown,
+.lines-brown {
+	color: #a5673f;
+}
+
+.text-grey,
+.line-grey,
+.lines-grey {
+	color: #8799a3;
+}
+
+.text-gray,
+.line-gray,
+.lines-gray {
+	color: #aaaaaa;
+}
+
+.text-black,
+.line-black,
+.lines-black {
+	color: #333333;
+}
+
+.text-white,
+.line-white,
+.lines-white {
+	color: #ffffff;
+}
