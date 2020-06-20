@@ -39,8 +39,7 @@ export default {
                 roleName: [
                     { required: true, message: '角色名称不能为空', trigger: 'blur' }
                 ]
-            },
-            tempKey: -666666 // 临时key, 用于解决tree半选中状态项不能传给后台接口问题. # 待优化
+            }
         }
     },
     methods: {
@@ -68,11 +67,9 @@ export default {
                         if (data && data.code === 200) {
                             this.dataForm.roleName = data.role.roleName
                             this.dataForm.remark = data.role.remark
-                            var idx = data.role.menuIdList.indexOf(this.tempKey)
-                            if (idx !== -1) {
-                                data.role.menuIdList.splice(idx, data.role.menuIdList.length - idx)
-                            }
-                            this.$refs.menuListTree.setCheckedKeys(data.role.menuIdList)
+                            data.role.menuIdList.forEach(item => {
+                                this.$refs.menuListTree.setChecked(item, true);
+                            });
                         }
                     })
                 }
@@ -89,7 +86,7 @@ export default {
                             'roleId': this.dataForm.id || undefined,
                             'roleName': this.dataForm.roleName,
                             'remark': this.dataForm.remark,
-                            'menuIdList': [].concat(this.$refs.menuListTree.getCheckedKeys(), [this.tempKey], this.$refs.menuListTree.getHalfCheckedKeys())
+                            'menuIdList': [].concat(this.$refs.menuListTree.getCheckedKeys(), this.$refs.menuListTree.getHalfCheckedKeys())
                         })
                     }).then(({ data }) => {
                         if (data && data.code === 200) {
