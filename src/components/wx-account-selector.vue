@@ -28,9 +28,7 @@ export default {
             }).then(({ data }) => {
                 if (data && data.code === 200) {
                     this.$store.commit('wxAccount/updateAccountList', data.list)
-                    if(data.list.length){
-                        this.selectAccount(data.list[0].appid)
-                    }else{
+                    if(!data.list.length){
                         this.$message.info("公众号列表为空，请先添加")
                     }
                 }
@@ -41,7 +39,6 @@ export default {
             if(this.selectedAppid!=appid){
                 this.$store.commit('wxAccount/selectAccount', appid)
             }
-            Vue.cookie.set('appid',appid)
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="!dataForm.appid ? '新增' : '修改'"
+    title="新增/修改"
     :close-on-click-modal="false"
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="100px">
@@ -31,7 +31,7 @@
       <el-input v-model="dataForm.token" placeholder="token"></el-input>
     </el-form-item>
     <el-form-item label="aesKey" prop="aesKey">
-      <el-input v-model="dataForm.aesKey" placeholder="aesKey"></el-input>
+      <el-input v-model="dataForm.aesKey" placeholder="aesKey，可为空"></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -90,7 +90,7 @@ import { mapState } from 'vuex'
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             this.$http({
-              url: this.$http.adornUrl(`/manage/wxAccount/${!this.dataForm.appid ? 'save' : 'update'}`),
+              url: this.$http.adornUrl(`/manage/wxAccount/save`),
               method: 'post',
            data: this.$http.adornData(this.dataForm)
             }).then(({data}) => {
