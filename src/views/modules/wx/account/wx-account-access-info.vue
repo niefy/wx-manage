@@ -27,7 +27,7 @@ export default {
             if(/^(\d(.\d){3})|localhost/.test(host)){
                 host='<span class="text-red">正式域名</span>'
             }
-            return location.protocol + '//' + host + '/wx/msg/' + this.account.appid
+            return location.protocol + '//' + host + '/wx/wx/msg/' + this.account.appid
         }
     },
     methods: {
