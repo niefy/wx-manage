@@ -13,6 +13,9 @@
                 <el-input v-model="dataForm.city" placeholder="城市" clearable></el-input>
             </el-form-item>
             <el-form-item>
+                <el-input v-model="dataForm.qrSceneStr" placeholder="关注场景值" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
                 <el-button @click="getDataList()">查询</el-button>
                 <el-button v-if="isAuth('wx:wxuser:save')"  type="primary" @click="$refs.wxUserTagging.init('tagging')" :disabled="dataListSelections.length <= 0">绑定标签</el-button>
                 <el-button v-if="isAuth('wx:wxuser:save')"  type="primary" @click="$refs.wxUserTagging.init('untagging')" :disabled="dataListSelections.length <= 0">解绑标签</el-button>
@@ -45,6 +48,8 @@
             <el-table-column prop="subscribeTime" header-align="center" align="center" label="订阅时间">
                 <template slot-scope="scope">{{$moment(scope.row.subscribeTime).calendar()}}</template>
             </el-table-column>
+            <el-table-column prop="qrSceneStr" header-align="center" align="center" label="场景值">
+            </el-table-column>
             <el-table-column prop="subscribe" header-align="center" align="center" label="是否关注">
                 <span slot-scope="scope">{{scope.row.subscribe?"是":"否"}}</span>
             </el-table-column>
@@ -71,7 +76,8 @@ export default {
             dataForm: {
                 tagid:'',
                 nickname: '',
-                city:''
+                city:'',
+                qrSceneStr:''
             },
             dataList: [],
             pageIndex: 1,
@@ -103,6 +109,7 @@ export default {
                     'nickname': this.dataForm.nickname,
                     'tagid': this.dataForm.tagid,
                     'city': this.dataForm.city,
+                    'qrSceneStr': this.dataForm.qrSceneStr,
                     'sidx': 'subscribe_time',
                     'order': 'desc'
                 })
