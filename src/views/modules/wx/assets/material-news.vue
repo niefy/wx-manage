@@ -36,10 +36,11 @@
     </div>
 </template>
 <script>
+import AddOrUpdate from './material-news-add-or-update'
 export default {
     name: 'material-news',
     components: { 
-        AddOrUpdate:()=>import('./material-news-add-or-update')
+        AddOrUpdate
     },
     props: {
         selectMode: {// 是否选择模式，选择模式下点击素材选中，不可新增和删除
@@ -140,6 +141,7 @@ export default {
             this.$message.error('复制失败,可能是此浏览器不支持复制')
         },
         onChange() {
+            this.pageIndex=1
             this.getDataList()
             this.$emit('change')
         }
