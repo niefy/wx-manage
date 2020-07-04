@@ -19,8 +19,12 @@ export default {
         }
       },
       selectAccount (state, appid) {
-        state.selectedAppid = appid
         Vue.cookie.set('appid',appid)
+        let oldAppid = state.selectedAppid
+        state.selectedAppid = appid
+        if(oldAppid){//切换账号时刷新网页
+          location.reload();
+        }
       },
     }
   }

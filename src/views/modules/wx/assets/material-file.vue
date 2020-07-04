@@ -30,6 +30,7 @@
     </div>
 </template>
 <script>
+import AddOrUpdate from './material-file-add-or-update'
 export default {
     name:'material-file',
     props:{
@@ -43,7 +44,7 @@ export default {
         }
     },
     components: {
-        AddOrUpdate:()=>import('./material-file-add-or-update')
+        AddOrUpdate
     },
     data() {
         return {
@@ -136,6 +137,7 @@ export default {
             this.$message.error('复制失败,可能是此浏览器不支持复制')
         },
         onChange(){
+            this.pageIndex=1
             this.getDataList()
             this.$emit('change')
         }
