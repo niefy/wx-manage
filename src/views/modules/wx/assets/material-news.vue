@@ -2,7 +2,7 @@
     <div class="panel">
         <div v-show="!addOrUpdateVisible">
             <el-form :inline="true" :model="dataForm">
-                <el-form-item>
+                <el-form-item v-show="!selectMode">
                     <el-button size="mini" v-if="isAuth('wx:wxassets:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
                 </el-form-item>
             </el-form>
@@ -18,7 +18,7 @@
                             </div>
                             <div class="card-footer">
                                 <div>{{$moment(item.updateTime).calendar()}}</div>
-                                <div class="flex justify-between align-center" v-if="!selectMode">
+                                <div class="flex justify-between align-center"  v-show="!selectMode">
                                     <el-button size="mini" type="text" icon="el-icon-copy-document" v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
                                     <el-button size="mini" type="text" icon="el-icon-edit" @click="addOrUpdateHandle(item)">编辑</el-button>
                                     <el-button size="mini" type="text" icon="el-icon-delete" @click="deleteHandle(item.mediaId)">删除</el-button>
@@ -112,9 +112,7 @@ export default {
                             message: '操作成功',
                             type: 'success',
                             duration: 1500,
-                            onClose: () => {
-                                this.materialFileBatchGet()
-                            }
+                            onClose: () => this.onChange()
                         })
                     } else {
                         this.$message.error(data.msg)

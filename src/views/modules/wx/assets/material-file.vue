@@ -1,7 +1,7 @@
 <template>
     <div class="mod-menu">
         <el-form :inline="true" :model="dataForm">
-            <el-form-item>
+            <el-form-item v-show="!selectMode">
                 <el-button size="mini" v-if="isAuth('wx:wxassets:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
             </el-form-item>
         </el-form>
@@ -16,7 +16,7 @@
                 <div class="card-footer">
                     <div class="text-cut-name">{{item.name}}</div>
                     <div>{{$moment(item.updateTime).calendar()}}</div>
-                    <div class="flex justify-between align-center">
+                    <div class="flex justify-between align-center" v-show="!selectMode">
                         <el-button size="mini" type="text" icon="el-icon-copy-document"  v-clipboard:copy="item.mediaId" v-clipboard:success="onCopySuccess" v-clipboard:error="onCopyError">复制media_id</el-button>
                         <el-button size="mini" type="text" icon="el-icon-delete"  @click="deleteHandle(item.mediaId)" >删除</el-button>
                     </div>
@@ -114,10 +114,7 @@ export default {
                             message: '操作成功',
                             type: 'success',
                             duration: 1500,
-                            onClose: () => {
-                                this.getDataList()
-                                this.$emit('change')
-                            }
+                            onClose: () =>  this.onChange()
                         })
                     } else {
                         this.$message.error(data.msg)
