@@ -1,5 +1,5 @@
 <template>
-    <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
+    <el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible" >
         <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="80px">
             <el-form-item label="规则名称" prop="ruleName">
                 <el-input v-model="dataForm.ruleName" placeholder="规则名称"></el-input>
@@ -63,7 +63,7 @@
             <el-button @click="visible = false">取消</el-button>
             <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
         </span>
-        <assets-selector v-if="assetsSelectorVisible && assetsType" :visible="assetsSelectorVisible" :selectType="assetsType" @selected="onAssetsSelect"></assets-selector>
+        <assets-selector v-if="assetsSelectorVisible && assetsType" :visible="assetsSelectorVisible" :selectType="assetsType" @selected="onAssetsSelect" @onClose="assetsSelectorVisible=false"></assets-selector>
     </el-dialog>
 </template>
 
