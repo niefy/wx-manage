@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.2.6",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "vue": "^2.6.12",
     "vue-clipboard2": "^0.3.1",
     "vue-cookie": "^1.1.4",
