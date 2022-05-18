@@ -13,12 +13,6 @@ module.exports = {
 	configureWebpack:{
 		devServer: {
 			disableHostCheck: true
-		},
-		externals: {
-			vue: "Vue",
-			"vue-router": "Router",
-            "element-ui": "ELEMENT",
-            "tinymce":"tinymce"
 		}
 	},
 	chainWebpack: config => {

@@ -9,6 +9,8 @@
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.2.6",
     "axios": "^0.19.0",
+    "element-ui": "^2.15.8",
+    "moment": "^2.29.3",
     "vue": "^2.6.12",
     "vue-clipboard2": "^0.3.1",
     "vue-cookie": "^1.1.4",
@@ -20,7 +22,7 @@
     "@vue/cli-plugin-babel": "^4.5.9",
     "@vue/cli-service": "^4.5.9",
     "sass": "^1.51.0",
-    "sass-loader":"10.2.0",
+    "sass-loader": "10.2.0",
     "vue-template-compiler": "^2.6.12"
   },
   "postcss": {

@@ -1,10 +1,12 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import VueCookie from 'vue-cookie'
-// import './element-ui'
+import './element-ui'
+import moment from 'moment'
 // import './element-ui-theme'
+import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/common.css'
 import './assets/scss/index.scss'
 import httpRequest from '@/utils/httpRequest' // api: https://github.com/axios/axios

@@ -4,13 +4,13 @@
  * 建议:
  * 1. 代码中路由统一使用name属性跳转(不使用path属性)
  */
-// import Vue from 'vue'
-// import Router from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import http from '@/utils/httpRequest'
 import { isURL } from '@/utils/validate'
 import { clearLoginInfo } from '@/utils'
 
-// Vue.use(Router)
+Vue.use(VueRouter)
 
 const _import = require('./import-views')
 // 全局路由(无需嵌套上左右整体布局)
