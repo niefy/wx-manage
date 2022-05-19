@@ -3,9 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import VueCookie from 'vue-cookie'
-import './element-ui'
+import ElementUI from 'element-ui';
 import moment from 'moment'
-// import './element-ui-theme'
+
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/common.css'
 import './assets/scss/index.scss'
@@ -13,6 +13,7 @@ import httpRequest from '@/utils/httpRequest' // api: https://github.com/axios/a
 import { isAuth } from '@/utils'
 import VueClipboard from 'vue-clipboard2'
 
+Vue.use(ElementUI);
 Vue.use(VueClipboard)
 Vue.use(VueCookie)
 Vue.config.productionTip = false

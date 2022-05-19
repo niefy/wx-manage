@@ -49,13 +49,13 @@ export default {
     data() {
         return {
             timeSelections:{
-                '近24小时':moment().subtract(1, 'days').format(TIME_FORMAT),
-                '近3天': moment().subtract(3, 'days').format(TIME_FORMAT),
-                '近7天': moment().subtract(7, 'days').format(TIME_FORMAT),
-                '近30天': moment().subtract(30, 'days').format(TIME_FORMAT),
+                '近24小时':this.$moment().subtract(1, 'days').format(TIME_FORMAT),
+                '近3天': this.$moment().subtract(3, 'days').format(TIME_FORMAT),
+                '近7天': this.$moment().subtract(7, 'days').format(TIME_FORMAT),
+                '近30天': this.$moment().subtract(30, 'days').format(TIME_FORMAT),
             },
             dataForm: {
-                startTime: moment().subtract(1, 'days').format(TIME_FORMAT),
+                startTime: this.$moment().subtract(1, 'days').format(TIME_FORMAT),
                 msgTypes: ''
             },
             dataList: [],

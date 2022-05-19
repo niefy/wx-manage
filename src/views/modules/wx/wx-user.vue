@@ -83,6 +83,7 @@ export default {
             pageIndex: 1,
             pageSize: 10,
             totalPage: 0,
+            showWxUserTagsEditor:false,
             dataListLoading: false,
             dataListSelections: [],
         }
