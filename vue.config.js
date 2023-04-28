@@ -7,12 +7,12 @@ module.exports = {
 				target: 'http://localhost:8088/'
 			}
 		},
-		port:8001,
-		inline:false //实时编译
+		port:8001
 	},
 	configureWebpack:{
 		devServer: {
-			disableHostCheck: true
+			historyApiFallback: true,
+			allowedHosts:"all",
 		}
 	},
 	chainWebpack: config => {
