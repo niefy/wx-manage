@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.2.6",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "element-ui": "^2.15.8",
     "moment": "^2.29.3",
     "vue": "^2.6.12",
